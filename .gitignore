@@ -1,0 +1,22 @@
+# Python (backend, uv-managed)
+backend/.venv/
+**/__pycache__/
+*.pyc
+backend/neethi.db
+backend/*.db
+.ruff_cache/
+
+# Node (frontend)
+frontend/node_modules/
+frontend/dist/
+
+# Env / secrets
+.env
+*.env
+!.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
