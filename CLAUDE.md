@@ -64,6 +64,26 @@ There is no separate API contract doc — see "Where the actual code lives" belo
 
 ## Episodic log (newest first)
 
+- **2026-07-18** (later) — Replaced the simulated payment flow with a real Razorpay integration
+  (Orders API + Checkout.js + webhook), per a scoping pass and architect spec (see
+  `.claude/NEETHI_OPEN_QUESTIONS.md`'s "Real Razorpay integration" entries). Two product decisions
+  confirmed with the user first: (1) real payment-detail entry now happens inside Razorpay's own
+  hosted checkout modal — the existing method-picker screen stays but only pre-selects a tab in
+  that modal now, no longer collects payment data itself; (2) lawyer payouts stay **manual
+  settlement**, not Razorpay Route — no per-lawyer linked-account KYC being built. Backend:
+  `PaymentOrder` reshaped (paise-unit amount, `razorpay_order_id`/`payment_id`/`signature`,
+  `verified` flag), new `WebhookEvent` table for idempotency, real `client.order.create`, SDK-based
+  signature verification on confirm, new `POST /api/payments/webhook` (raw-body verification before
+  JSON parse, handles `payment.captured`/`payment.failed` only). Unset keys → `503` at request time,
+  rest of the app unaffected (confirmed default). Frontend: real Checkout.js modal integration with
+  success/dismiss/failure handling, badge copy "Razorpay · simulated" → "Razorpay · secure".
+  **Not verified**: the actual live order-creation/signature round-trip against Razorpay's real
+  servers — no test-mode API keys were available in this session; only the zero-config `503` path
+  and the SDK's HMAC verification logic (via a unit test with a fake local secret) were exercised.
+  Get free Razorpay test keys (no KYC needed) whenever ready to test the real flow. Also repo-wide
+  note: the repo is now git-initialized and pushed to `github.com/SubashNadar/Neethi-X` (`main`),
+  and `backend/Dockerfile` + `frontend/Dockerfile` (+ `nginx.conf` for SPA routing) exist for a
+  future Coolify deployment, not yet build-tested against real Docker (none available locally).
 - **2026-07-18** — Walked through all 9 `.claude/NEETHI_OPEN_QUESTIONS.md` entries with the user (see that
   file's "Resolution pass with user, 2026-07-18" section for the full record). 4 kept as-implemented
   (messages endpoints, lawyer mobile-tab labels, demo-lawyer guest-login identity, `Booking` extra fields), 4

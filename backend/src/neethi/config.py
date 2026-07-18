@@ -23,11 +23,23 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str | None = None
     ANTHROPIC_MODEL: str = "claude-sonnet-5"
 
+    # Razorpay test-mode credentials. When unset, payment endpoints return 503 at
+    # request time — the rest of the app (free chat, lawyers, dashboard) still boots
+    # and works with zero config. See .claude/NEETHI_OPEN_QUESTIONS.md "Real Razorpay
+    # integration" entry.
+    RAZORPAY_KEY_ID: str | None = None
+    RAZORPAY_KEY_SECRET: str | None = None
+    RAZORPAY_WEBHOOK_SECRET: str | None = None
+
     CORS_ORIGINS: str = "http://localhost:5173"
 
     @property
     def cors_origins_list(self) -> list[str]:
         return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+
+    @property
+    def razorpay_configured(self) -> bool:
+        return bool(self.RAZORPAY_KEY_ID and self.RAZORPAY_KEY_SECRET)
 
 
 @lru_cache

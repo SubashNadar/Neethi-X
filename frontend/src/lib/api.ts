@@ -9,6 +9,7 @@ import type {
   MessageThread,
   PaymentMethod,
   PaymentOrder,
+  RazorpayResult,
   Role,
   User,
   UserDashboard,
@@ -170,9 +171,25 @@ export async function createPaymentOrder(
 
 export async function confirmPayment(
   orderId: string,
+  result: RazorpayResult,
 ): Promise<{ status: 'paid'; booking: Booking }> {
-  const { data } = await client.post(`/payments/${orderId}/confirm`)
+  const { data } = await client.post(`/payments/${orderId}/confirm`, result)
   return data
+}
+
+let razorpayScriptPromise: Promise<void> | null = null
+
+export function loadRazorpayScript(): Promise<void> {
+  if (window.Razorpay) return Promise.resolve()
+  if (razorpayScriptPromise) return razorpayScriptPromise
+  razorpayScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error('Failed to load payment gateway script'))
+    document.body.appendChild(script)
+  })
+  return razorpayScriptPromise
 }
 
 // ---- Dashboard ----

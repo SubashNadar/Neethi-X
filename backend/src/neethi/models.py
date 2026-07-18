@@ -104,14 +104,44 @@ class Booking(Base):
 
 
 class PaymentOrder(Base):
+    """Real Razorpay order (see routers/payments.py). Replaces the earlier simulated
+    version — see .claude/NEETHI_OPEN_QUESTIONS.md "Real Razorpay integration" entry.
+    """
+
     __tablename__ = "payment_orders"
 
     id: Mapped[str] = mapped_column(String(32), primary_key=True, default=gen_id)
     booking_id: Mapped[str] = mapped_column(String(32), ForeignKey("bookings.id"))
-    method: Mapped[str] = mapped_column(String(20))  # "upi" | "card" | "netbanking"
-    amount: Mapped[int] = mapped_column(Integer, default=500)
-    status: Mapped[str] = mapped_column(String(20), default="processing")
+    # Advisory only now — no longer collects payment data itself; passed to Razorpay
+    # Checkout as `prefill.method` so the pre-existing method-picker screen still has
+    # a real function. "upi" | "card" | "netbanking".
+    method: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    # NOTE: unit change — this is now in PAISE (₹500 = 50000), matching what Razorpay's
+    # API expects, not rupees like the old simulated field.
+    amount: Mapped[int] = mapped_column(Integer, default=50000)
+    currency: Mapped[str] = mapped_column(String(3), default="INR")
+    # Our reference sent to Razorpay as `receipt` — reuses booking.ref.
+    receipt: Mapped[str] = mapped_column(String(64))
+    razorpay_order_id: Mapped[str | None] = mapped_column(
+        String(64), nullable=True, unique=True, index=True
+    )
+    razorpay_payment_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
+    razorpay_signature: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    status: Mapped[str] = mapped_column(String(20), default="created")  # "created"|"paid"|"failed"
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class WebhookEvent(Base):
+    """One row per processed Razorpay webhook event, keyed by their X-Razorpay-Event-Id
+    header — makes webhook delivery (which Razorpay retries) idempotent.
+    """
+
+    __tablename__ = "webhook_events"
+
+    event_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    event_type: Mapped[str] = mapped_column(String(40))
+    received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 class MessageThread(Base):

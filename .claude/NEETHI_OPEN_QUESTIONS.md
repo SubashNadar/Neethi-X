@@ -1,3 +1,62 @@
+## Real Razorpay integration — backend implementation detail (2026-07-18)
+
+**Question:** The architect spec says `create_order` should reuse an existing
+`PaymentOrder` (same booking, `status == "created"`, has a `razorpay_order_id`) on
+retry instead of creating a duplicate Razorpay order, but doesn't say what to do if
+the retry request specifies a different `method` (e.g. user picked "card" first, hit
+back, picked "upi" on retry) than the one stored on the reused row.
+
+**Default chosen:** Update `order.method` to the latest requested value before
+returning the reused order — `method` is advisory-only (passed to Razorpay Checkout as
+`prefill.method`), so keeping it in sync with the user's latest choice is strictly more
+correct than leaving a stale value, and doesn't affect the Razorpay order itself (which
+is already created and immutable). Low-risk/reversible: a one-line change to stop
+updating it if this turns out to be unwanted.
+
+**Implemented at:** `backend/src/neethi/routers/payments.py` (`create_order`, the
+`existing is not None` branch).
+
+---
+
+## Real Razorpay integration — scoping decisions with user, 2026-07-18
+
+Two product-behavior-changing decisions (guardrails §2 point 4 — not silently-decidable defaults),
+confirmed with the user before any implementation:
+
+1. **UX deviation, confirmed acceptable**: real Razorpay payment collection requires their own
+   hosted Checkout.js modal for entering card/UPI/netbanking details, which necessarily takes over
+   from the current custom-built method-picker screen in `PaymentPage.tsx` (which today matches the
+   demo mockup exactly, including the "Razorpay · simulated" badge). The existing screen can remain
+   as a pre-confirmation step, but real payment-detail entry happens inside Razorpay's own UI, not
+   ours. This is a real, user-visible change from the demo — user confirmed it's fine.
+2. **Lawyer payout model: manual settlement**, not Razorpay Route. Razorpay Orders/Checkout only
+   moves money from the user into the business account — it does not auto-split the 70/30 to
+   lawyers. User chose to handle lawyer payouts manually/periodically (using the existing
+   `lawyer_share` field as the record of what's owed) rather than integrating Razorpay Route, which
+   would require each lawyer to complete their own linked-account KYC. Route is not being built.
+
+Not yet implemented — spec pass with neethi-architect next, then backend/frontend build.
+
+### Architect spec pass, same day — 4 more decisions
+
+1. **Unset Razorpay keys → `503` at request time**, not a boot failure. App keeps booting with
+   zero config (free chat/lawyers/dashboard unaffected); only the payment endpoints themselves
+   return `503` until keys are set. Confirmed with user.
+2. **Payment-screen badge copy**: "Razorpay · simulated" → **"Razorpay · secure"** once this is a
+   real integration (the old text becomes false). Confirmed with user.
+3. **Method-picker UI kept**, repurposed to pass the selected method into Razorpay's checkout modal
+   as `prefill.method` rather than removed — preserves demo screen fidelity while giving the picker
+   a real function now that it no longer collects payment data itself. Low-risk default, not
+   separately confirmed.
+4. **`payment.failed` webhook leaves the booking at `pending_payment`** (retryable) rather than a
+   terminal failed state, so the user can retry payment from the same screen. Low-risk/reversible
+   default, not separately confirmed.
+
+Full technical spec (model/schema/endpoint/webhook/frontend details) produced by neethi-architect
+this session; implementation to follow.
+
+---
+
 ## Resolution pass with user, 2026-07-18
 
 All 9 entries below were walked through with the user directly. Outcomes:

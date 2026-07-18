@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { confirmPayment, createPaymentOrder, getApiErrorMessage, getBooking } from '../lib/api'
+import {
+  confirmPayment,
+  createPaymentOrder,
+  getApiErrorMessage,
+  getBooking,
+  loadRazorpayScript,
+} from '../lib/api'
 import { ErrorState, LoadingState } from '../components/states'
 import type { Booking, PaymentMethod } from '../types'
 
@@ -39,8 +45,38 @@ export default function PaymentPage() {
     setPayError(null)
     try {
       const order = await createPaymentOrder(booking.id, method)
-      await confirmPayment(order.order_id)
-      navigate(`/success/${booking.id}`)
+      await loadRazorpayScript()
+      const rzp = new window.Razorpay({
+        key: order.razorpay_key_id,
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.razorpay_order_id,
+        name: 'Neethi-X',
+        description: `${booking.consult_type} consult · ${booking.lawyer.name}`,
+        prefill: {
+          name: order.prefill.name ?? undefined,
+          contact: order.prefill.contact ?? undefined,
+          email: order.prefill.email ?? undefined,
+        },
+        method,
+        handler: async (response) => {
+          try {
+            await confirmPayment(order.order_id, response)
+            navigate(`/success/${booking.id}`)
+          } catch (err) {
+            setPayError(getApiErrorMessage(err))
+            setPaying(false)
+          }
+        },
+        modal: {
+          ondismiss: () => setPaying(false), // user closed the modal — not an error, just reset
+        },
+      })
+      rzp.on('payment.failed', (response) => {
+        setPayError(response.error?.description ?? 'Payment failed. Please try again.')
+        setPaying(false)
+      })
+      rzp.open()
     } catch (err) {
       setPayError(getApiErrorMessage(err))
       setPaying(false)
@@ -75,7 +111,7 @@ export default function PaymentPage() {
           <div className="flex items-center justify-between">
             <div className="font-heading text-lg font-bold">Pay securely</div>
             <div className="rounded-full bg-bg px-2.5 py-1 text-[11px] font-bold text-muted">
-              Razorpay · simulated
+              Razorpay · secure
             </div>
           </div>
           <div className="mt-4 flex flex-col gap-2">
