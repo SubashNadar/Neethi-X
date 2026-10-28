@@ -33,6 +33,35 @@ level code-splitting would bring it back down; not done yet.
 
 **Reversible:** all on one branch; revert the commit to return to the demo look exactly.
 
+### Second pass, same day: premium redesign (user: "still basic, provide stylish professional")
+
+The user explicitly asked for a stronger look, so this pass goes beyond the demo's layout. Still kept:
+all functional copy, the navy primary, Figtree and Bricolage Grotesque, routes and behaviour.
+
+- **New tokens:** `navy` 600–950 scale, `brass` accent (`#B8893B`, light `#D9B56E`, soft `#F6EEDF`,
+  dark `#8C6526`), shadows `card`, `lift`, `composer`, and **Fraunces** (Google Fonts) as `font-display`
+  for page titles.
+- **Shell:** full-height dark navy sidebar holding the brand (the white top bar is now mobile-only, also
+  navy), "Workspace"/"Practice" label, brass active bar, Neethi Plus card in navy and brass, user card
+  with role ("Member"/"Advocate") and a sign-out icon instead of the text link.
+- **Login:** split screen. Left: navy brand panel with grid texture, "AI legal assistant for India"
+  pill, serif headline, three badge tiles, and a sample Q and A taken from the FIR rule-engine answer.
+  Right: the same form, restyled.
+- **Chat:** before the first message, a hero ("Namaste! I'm Neethi." plus the greeting text) and four
+  suggestion tiles with topic labels (Criminal, Property, Police, Employment) in place of the quick-reply
+  chips. Answers are cards with a "Legal information" label, numbered points, a Sources footer and a
+  Copy action. The lawyer CTA is a navy card with a brass button. Floating composer with an arrow send
+  button; the disclaimer moved from a banner to a line under the composer. New right panel on wide
+  screens (xl): "Talk to a verified lawyer" card and three "How Neethi answers" principles.
+- **Lawyers:** eyebrow label, serif title, segmented filter, cards with a coloured header band, rating
+  badge, larger square avatar.
+- **Dashboard:** navy hero banner with an "Ask Neethi" button, card shadows, serif section titles.
+
+New copy introduced (all small labels): "Workspace", "Practice", "Member", "Advocate", "AI legal
+assistant for India", "Ask Neethi" (login preview label), "Legal information", "Sources", the four
+topic labels, "Talk to a verified lawyer", "Find a lawyer", "How Neethi answers" and its three lines,
+"Find a lawyer" eyebrow. Review and change any of these freely.
+
 ---
 
 ## Real Razorpay integration — backend implementation detail (2026-07-18)

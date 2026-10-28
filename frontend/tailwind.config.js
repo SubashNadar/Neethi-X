@@ -21,6 +21,19 @@ export default {
         accent: { DEFAULT: '#EAF1F8', foreground: '#1B2430' },
         destructive: { DEFAULT: '#B42318', foreground: '#FFFFFF' },
         popover: { DEFAULT: '#FFFFFF', foreground: '#1B2430' },
+        navy: {
+          950: '#0A1424',
+          900: '#0F1E33',
+          800: '#162A47',
+          700: '#1F3A5F',
+          600: '#2D5185',
+        },
+        brass: {
+          DEFAULT: '#B8893B',
+          light: '#D9B56E',
+          soft: '#F6EEDF',
+          dark: '#8C6526',
+        },
         soft: '#EAF1F8',
         line: '#E2E7EF',
         ink: '#1B2430',
@@ -47,10 +60,14 @@ export default {
       fontFamily: {
         heading: ['"Bricolage Grotesque"', 'sans-serif'],
         body: ['Figtree', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
       },
       boxShadow: {
         soft: '0 8px 24px rgba(120,90,50,0.10)',
         login: '0 12px 40px rgba(120,90,50,0.08)',
+        card: '0 1px 2px rgba(15,30,51,0.04), 0 4px 16px rgba(15,30,51,0.06)',
+        lift: '0 2px 4px rgba(15,30,51,0.04), 0 16px 40px rgba(15,30,51,0.12)',
+        composer: '0 8px 30px rgba(15,30,51,0.10)',
       },
       keyframes: {
         dotpulse: {

@@ -26,17 +26,17 @@ export function AppShell() {
   }, [user?.role])
 
   return (
-    <div className="flex h-[100dvh] flex-col overflow-hidden bg-bg font-body text-ink">
-      <header className="flex h-16 flex-none items-center gap-3.5 border-b border-line bg-surface px-4 md:px-6">
-        <BrandLockup />
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-bg font-body text-ink md:flex-row">
+      <header className="flex h-16 flex-none items-center gap-3.5 bg-navy-900 px-4 md:hidden">
+        <BrandLockup inverted />
       </header>
-      <div className="flex min-h-0 flex-1">
-        <Sidebar unreadThreads={unreadThreads} />
-        <main className="flex min-w-0 flex-1 flex-col">
+      <Sidebar unreadThreads={unreadThreads} />
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col">
           <Outlet />
         </main>
+        <BottomTabBar />
       </div>
-      <BottomTabBar />
     </div>
   )
 }
