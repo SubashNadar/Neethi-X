@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { CalendarCheck, MessageSquareText, PiggyBank } from 'lucide-react'
 import { getApiErrorMessage, getUserDashboard } from '../lib/api'
 import { ErrorState, LoadingState } from '../components/states'
 import { useAuth } from '../context/AuthContext'
@@ -37,15 +38,24 @@ export default function DashboardPage() {
       <div className="mt-1 text-sm text-muted">Your legal matters, all in one place</div>
 
       <div className="mt-5 grid max-w-[760px] grid-cols-1 gap-3.5 sm:grid-cols-3">
-        <div className="rounded-[18px] border border-line bg-surface p-[18px]">
+        <div className="rounded-[18px] border border-line bg-surface p-[18px] transition-shadow hover:shadow-soft">
+          <div className="mb-2.5 flex size-9 items-center justify-center rounded-xl bg-soft text-primary">
+            <MessageSquareText className="size-[18px]" />
+          </div>
           <div className="font-heading text-[26px] font-extrabold">{data.questions_answered}</div>
           <div className="mt-0.5 text-xs text-muted">questions answered free</div>
         </div>
-        <div className="rounded-[18px] border border-line bg-surface p-[18px]">
+        <div className="rounded-[18px] border border-line bg-surface p-[18px] transition-shadow hover:shadow-soft">
+          <div className="mb-2.5 flex size-9 items-center justify-center rounded-xl bg-soft text-primary">
+            <CalendarCheck className="size-[18px]" />
+          </div>
           <div className="font-heading text-[26px] font-extrabold">{data.consults_booked}</div>
           <div className="mt-0.5 text-xs text-muted">lawyer consults booked</div>
         </div>
-        <div className="rounded-[18px] border border-line bg-surface p-[18px]">
+        <div className="rounded-[18px] border border-line bg-surface p-[18px] transition-shadow hover:shadow-soft">
+          <div className="mb-2.5 flex size-9 items-center justify-center rounded-xl bg-success-bg text-success-text">
+            <PiggyBank className="size-[18px]" />
+          </div>
           <div className="font-heading text-[26px] font-extrabold text-success-text">
             ₹{data.saved_amount.toLocaleString('en-IN')}
           </div>

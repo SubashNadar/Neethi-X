@@ -1,3 +1,40 @@
+## Visual polish with open-source components (user-requested, 2026-10-28)
+
+**Question:** The user asked to "make the application UI components stylish" using open-source
+libraries. Guardrails §4 says not to redesign screens on our own judgement, so this entry records
+exactly what changed and what was kept.
+
+**Kept unchanged:** every design token (colours, Bricolage Grotesque and Figtree, pill shapes, the
+soft warm shadow), all copy, all screens and routes, the `dotpulse` typing indicator.
+
+**Added (libraries, all MIT or ISC):** shadcn/ui pattern (`components.json`, `src/lib/utils.ts` `cn`,
+and `src/components/ui/button|badge|tooltip.tsx` copied from shadcn/ui and adapted to Tailwind 3 and
+the Neethi palette), `radix-ui`, `lucide-react` icons, `motion` animations, `sonner` toasts,
+`tailwindcss-animate`. The shadcn colour names (`primary-foreground`, `secondary`, `accent`, `ring`,
+etc.) are mapped onto the existing Neethi hex values in `tailwind.config.js`. `destructive`
+(`#B42318`) is the one new colour; nothing uses it yet.
+
+**Visual changes:**
+- Sidebar and mobile tabs: lucide icons; the active pill slides between items.
+- Chat: Neethi avatar beside AI replies; replies fade in; book icon on the citation chip; a copy
+  button (tooltip and "Answer copied" toast) on hover; sparkle icon on quick replies; scale icon on
+  the lawyer CTA; a send icon on the Send button (label hidden below `sm`); shield icon on the
+  disclaimer; pulsing Online dot; faint dot-grid background.
+- Lawyers: verified, star, languages and clock icons; cards fade in and lift on hover.
+- Login: two blurred colour washes behind the hero; "within reach." in a navy gradient; icons on
+  the three badges.
+- Dashboard: an icon tile on each stat card.
+
+**Bug fixed on the way:** the lawyers API returns `langs` as a list, but `types.ts` typed it as a
+string, so cards showed "EnglishTamil". `langs` is now `string[]` and joined with " · ".
+
+**Cost:** the JS bundle grew from about 103 KB to 189 KB gzipped, mostly `motion` and Radix. Route
+level code-splitting would bring it back down; not done yet.
+
+**Reversible:** all on one branch; revert the commit to return to the demo look exactly.
+
+---
+
 ## Real Razorpay integration — backend implementation detail (2026-07-18)
 
 **Question:** The architect spec says `create_order` should reuse an existing

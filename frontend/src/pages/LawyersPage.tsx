@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { BadgeCheck, Clock3, Languages, Star } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import { getApiErrorMessage, getLawyers } from '../lib/api'
 import { ErrorState, LoadingState } from '../components/states'
@@ -58,14 +60,18 @@ export default function LawyersPage() {
       )}
       {!loading && !error && lawyers && lawyers.length > 0 && (
         <div className="mt-5 grid grid-cols-1 gap-4 [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] md:[grid-template-columns:repeat(auto-fill,minmax(340px,1fr))]">
-          {lawyers.map((lw) => (
-            <div
+          {lawyers.map((lw, i) => (
+            <motion.div
               key={lw.id}
-              className="flex flex-col gap-3 rounded-[20px] border border-line bg-surface p-5 transition-shadow hover:shadow-soft"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 * i, duration: 0.25, ease: 'easeOut' }}
+              whileHover={{ y: -3 }}
+              className="flex flex-col gap-3 rounded-[20px] border border-line bg-surface p-5 transition-shadow hover:border-focus/60 hover:shadow-soft"
             >
               <div className="flex items-center gap-3.5">
                 <div
-                  className="flex h-[52px] w-[52px] flex-none items-center justify-center rounded-full text-[17px] font-bold text-white"
+                  className="flex h-[52px] w-[52px] flex-none items-center justify-center rounded-full text-[17px] font-bold text-white ring-4 ring-bg"
                   style={{ background: lw.avatar_color }}
                 >
                   {lw.initials}
@@ -73,8 +79,9 @@ export default function LawyersPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
                     <div className="text-base font-bold">{lw.name}</div>
-                    <div className="rounded-full bg-success-bg px-2.5 py-0.5 text-[11px] font-bold text-success-text">
-                      ✓ Verified
+                    <div className="inline-flex items-center gap-1 rounded-full bg-success-bg px-2.5 py-0.5 text-[11px] font-bold text-success-text">
+                      <BadgeCheck className="size-3.5" />
+                      Verified
                     </div>
                   </div>
                   <div className="mt-0.5 text-[13px] text-muted">
@@ -83,11 +90,18 @@ export default function LawyersPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 text-xs text-body2">
-                <div className="rounded-full bg-bg px-2.5 py-1.5">
-                  ★ {lw.rating} ({lw.reviews})
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-bg px-2.5 py-1.5">
+                  <Star className="size-3.5 fill-warn-text text-warn-text" />
+                  {lw.rating} ({lw.reviews})
                 </div>
-                <div className="rounded-full bg-bg px-2.5 py-1.5">{lw.langs}</div>
-                <div className="rounded-full bg-bg px-2.5 py-1.5">Next: {lw.next_slot}</div>
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-bg px-2.5 py-1.5">
+                  <Languages className="size-3.5 text-muted" />
+                  {lw.langs.join(' · ')}
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-bg px-2.5 py-1.5">
+                  <Clock3 className="size-3.5 text-muted" />
+                  Next: {lw.next_slot}
+                </div>
               </div>
               <div className="mt-0.5 flex items-center gap-3">
                 <div className="flex-1">
@@ -104,7 +118,7 @@ export default function LawyersPage() {
                   Book
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

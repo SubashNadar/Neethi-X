@@ -26,7 +26,7 @@ export interface LawyerCard {
   spec: string
   category: string
   exp: number
-  langs: string
+  langs: string[]
   rating: number
   reviews: number
   next_slot: string

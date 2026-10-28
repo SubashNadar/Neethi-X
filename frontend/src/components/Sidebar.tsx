@@ -1,33 +1,46 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import {
+  CalendarCheck,
+  LayoutDashboard,
+  type LucideIcon,
+  MessageSquareText,
+  MessagesSquare,
+  Scale,
+  UserRound,
+} from 'lucide-react'
+import { motion } from 'motion/react'
 import { useAuth } from '../context/AuthContext'
 
 interface NavItem {
   label: string
   path: string
   match: string[]
+  icon: LucideIcon
 }
 
 export function useNavItems(unreadThreads: number): NavItem[] {
   const { user } = useAuth()
   if (user?.role === 'lawyer') {
     return [
-      { label: 'Dashboard', path: '/portal', match: ['/portal'] },
+      { label: 'Dashboard', path: '/portal', match: ['/portal'], icon: LayoutDashboard },
       {
         label: unreadThreads > 0 ? `Client Messages (${unreadThreads})` : 'Client Messages',
         path: '/messages',
         match: ['/messages'],
+        icon: MessagesSquare,
       },
-      { label: 'My Profile', path: '/profile', match: ['/profile'] },
+      { label: 'My Profile', path: '/profile', match: ['/profile'], icon: UserRound },
     ]
   }
   return [
-    { label: 'Chat with Neethi', path: '/chat', match: ['/chat'] },
+    { label: 'Chat with Neethi', path: '/chat', match: ['/chat'], icon: MessageSquareText },
     {
       label: 'Find a Lawyer',
       path: '/lawyers',
       match: ['/lawyers', '/booking', '/pay', '/success'],
+      icon: Scale,
     },
-    { label: 'My Consultations', path: '/dashboard', match: ['/dashboard'] },
+    { label: 'My Consultations', path: '/dashboard', match: ['/dashboard'], icon: CalendarCheck },
   ]
 }
 
@@ -48,14 +61,22 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              className={`flex items-center gap-2.5 rounded-2xl px-3.5 py-3 text-left text-sm transition-colors ${
-                active ? 'bg-soft font-bold text-ink' : 'font-medium text-body2 hover:bg-bg'
+              className={`relative flex items-center gap-2.5 rounded-2xl px-3.5 py-3 text-left text-sm transition-colors ${
+                active ? 'font-bold text-ink' : 'font-medium text-body2 hover:bg-bg'
               }`}
             >
-              <span
-                className={`h-2 w-2 flex-none rounded-full ${active ? 'bg-primary' : 'bg-line'}`}
+              {active && (
+                <motion.span
+                  layoutId="sidebar-active"
+                  className="absolute inset-0 rounded-2xl bg-soft"
+                  transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                />
+              )}
+              <item.icon
+                className={`relative size-[18px] flex-none ${active ? 'text-primary' : 'text-faint'}`}
+                strokeWidth={active ? 2.4 : 2}
               />
-              {item.label}
+              <span className="relative">{item.label}</span>
             </button>
           )
         })}

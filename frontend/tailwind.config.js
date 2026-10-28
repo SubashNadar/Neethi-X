@@ -1,3 +1,5 @@
+import animate from 'tailwindcss-animate'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -7,7 +9,18 @@ export default {
         primary: {
           DEFAULT: '#1F3A5F',
           hover: '#15263C',
+          foreground: '#FFFFFF',
         },
+        // shadcn/ui token names, mapped onto the Neethi palette above
+        background: '#FFFFFF',
+        foreground: '#1B2430',
+        border: '#E2E7EF',
+        input: '#E2E7EF',
+        ring: '#A9C2E0',
+        secondary: { DEFAULT: '#EAF1F8', foreground: '#1F3A5F' },
+        accent: { DEFAULT: '#EAF1F8', foreground: '#1B2430' },
+        destructive: { DEFAULT: '#B42318', foreground: '#FFFFFF' },
+        popover: { DEFAULT: '#FFFFFF', foreground: '#1B2430' },
         soft: '#EAF1F8',
         line: '#E2E7EF',
         ink: '#1B2430',
@@ -47,12 +60,17 @@ export default {
         spin: {
           to: { transform: 'rotate(360deg)' },
         },
+        shimmer: {
+          from: { backgroundPosition: '200% 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
       },
       animation: {
         dotpulse: 'dotpulse 1s infinite',
+        shimmer: 'shimmer 2.4s linear infinite',
         spin: 'spin 0.8s linear infinite',
       },
     },
   },
-  plugins: [],
+  plugins: [animate],
 }

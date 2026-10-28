@@ -64,6 +64,12 @@ There is no separate API contract doc — see "Where the actual code lives" belo
 
 ## Episodic log (newest first)
 
+- **2026-10-28** — Visual polish at the user's request: shadcn/ui pattern (Tailwind 3 adapted, Neethi
+  palette mapped), lucide icons, motion animations, sonner toasts, Radix tooltip; fixed the lawyer
+  `langs` list rendering as "EnglishTamil". Tokens and copy unchanged. Details and bundle-size cost in
+  `.claude/NEETHI_OPEN_QUESTIONS.md` ("Visual polish with open-source components"). Also planned: the
+  **Nya-AI** law-book agent (design in SubashNadar/legal-docs-platform `docs/NYA-AI.md`) will replace
+  `chat_engine.get_answer`.
 - **2026-07-18** (later) — Replaced the simulated payment flow with a real Razorpay integration
   (Orders API + Checkout.js + webhook), per a scoping pass and architect spec (see
   `.claude/NEETHI_OPEN_QUESTIONS.md`'s "Real Razorpay integration" entries). Two product decisions

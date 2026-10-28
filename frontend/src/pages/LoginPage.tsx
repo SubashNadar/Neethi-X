@@ -1,11 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Clock3, IndianRupee, type LucideIcon, Sparkles } from 'lucide-react'
+import { motion } from 'motion/react'
 import { BrandLockup } from '../components/Logo'
 import { useAuth } from '../context/AuthContext'
 import { getApiErrorMessage } from '../lib/api'
 import type { Role } from '../types'
 
-const BADGES = ['Free AI answers', 'Consults from ₹500', '24×7, on your phone']
+const BADGES: { label: string; icon: LucideIcon }[] = [
+  { label: 'Free AI answers', icon: Sparkles },
+  { label: 'Consults from ₹500', icon: IndianRupee },
+  { label: '24×7, on your phone', icon: Clock3 },
+]
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -78,11 +84,27 @@ export default function LoginPage() {
         <BrandLockup />
       </header>
 
-      <div className="flex flex-1 items-center justify-center p-6">
-        <div className="flex w-full max-w-[980px] flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-14">
-          <div className="max-w-[440px] flex-1">
+      <div className="relative flex flex-1 items-center justify-center overflow-hidden p-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-32 top-10 h-[420px] w-[420px] rounded-full bg-soft blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-40 right-0 h-[460px] w-[460px] rounded-full bg-success-bg/70 blur-3xl"
+        />
+        <div className="relative flex w-full max-w-[980px] flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-14">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="max-w-[440px] flex-1"
+          >
             <h1 className="font-heading text-[34px] font-extrabold leading-[1.08] tracking-[-0.5px] md:text-[44px]">
-              Legal help, finally within reach.
+              Legal help, finally{' '}
+              <span className="bg-gradient-to-r from-primary to-[#3B6EA5] bg-clip-text text-transparent">
+                within reach.
+              </span>
             </h1>
             <p className="mt-4 text-[17px] leading-[1.6] text-body2">
               90% of Indians can't afford a lawyer. Ask Neethi anything about your rights — free,
@@ -91,14 +113,15 @@ export default function LoginPage() {
             <div className="mt-5 flex flex-wrap gap-2.5">
               {BADGES.map((b) => (
                 <div
-                  key={b}
-                  className="rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] font-semibold"
+                  key={b.label}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/80 px-3.5 py-2 text-[13px] font-semibold backdrop-blur"
                 >
-                  {b}
+                  <b.icon className="size-3.5 text-primary" />
+                  {b.label}
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           <div className="w-full max-w-[360px] flex-none rounded-3xl border border-line bg-surface p-7 shadow-login">
             <div className="font-heading text-[22px] font-bold">Get started</div>
