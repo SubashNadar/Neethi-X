@@ -10,7 +10,7 @@ from nya_ai.auth import get_current_user
 from nya_ai.database import get_db
 from nya_ai.models import Booking, Lawyer, User
 from nya_ai.routers.lawyers import _to_card
-from nya_ai.schemas import BookingIn, BookingOut, BookingRespondIn, BookingsListOut
+from nya_ai.schemas import BookingIn, BookingOut, BookingRespondIn, BookingsListOut, ConsultBrief
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 
@@ -24,6 +24,7 @@ def _to_out(booking: Booking, lawyer: Lawyer) -> BookingOut:
         client_name=booking.client_name,
         client_initials=booking.client_initials,
         topic=booking.topic,
+        brief=ConsultBrief.model_validate_json(booking.brief_json) if booking.brief_json else None,
         day_label=booking.day_label,
         slot_label=booking.slot_label,
         consult_type=booking.consult_type,
@@ -72,7 +73,8 @@ def create_booking(
         user_id=user.id,
         client_name=user.name,
         client_initials=user.initials,
-        topic=None,
+        topic=payload.brief.topic if payload.brief else None,
+        brief_json=payload.brief.model_dump_json() if payload.brief else None,
         day_label=payload.day_label,
         slot_label=payload.slot_label,
         consult_type=payload.consult_type,

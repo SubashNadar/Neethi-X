@@ -107,6 +107,21 @@ export default function LawyerPortalPage() {
               <div className="mt-0.5 text-xs text-muted">
                 {r.day_label} · {r.slot_label} · you receive ₹{r.lawyer_share}
               </div>
+              {r.brief && (
+                <details className="mt-1.5 text-[13px]">
+                  <summary className="cursor-pointer font-mono text-[11px] tracking-[0.1em] text-primary">
+                    CLIENT BRIEF · {r.brief.questions.length} QUESTION{r.brief.questions.length === 1 ? '' : 'S'}
+                  </summary>
+                  {r.brief.facts && <p className="mt-1.5 whitespace-pre-wrap text-body2">{r.brief.facts}</p>}
+                  {r.brief.questions.length > 0 && (
+                    <ol className="mt-1.5 list-decimal space-y-0.5 pl-5 text-body2">
+                      {r.brief.questions.map((q, i) => (
+                        <li key={i}>{q}</li>
+                      ))}
+                    </ol>
+                  )}
+                </details>
+              )}
             </div>
             {r.status === 'paid' || r.status === 'pending_payment' ? (
               <>
@@ -131,7 +146,7 @@ export default function LawyerPortalPage() {
                   className={`rounded-full px-3.5 py-1.5 text-xs font-bold ${
                     r.status === 'accepted'
                       ? 'bg-success-bg text-success-dark'
-                      : 'bg-[#EBEEF3] text-muted'
+                      : 'bg-soft text-muted'
                   }`}
                 >
                   {r.status === 'accepted' ? 'Accepted ✓' : 'Declined'}
@@ -142,6 +157,14 @@ export default function LawyerPortalPage() {
                     className="rounded-full bg-primary px-[18px] py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
                   >
                     Respond
+                  </button>
+                )}
+                {r.status === 'accepted' && (
+                  <button
+                    onClick={() => navigate(`/call/${r.id}`)}
+                    className="rounded-full border border-primary/50 px-[18px] py-2.5 text-[13px] font-bold text-primary hover:bg-primary/10"
+                  >
+                    Call room
                   </button>
                 )}
               </>

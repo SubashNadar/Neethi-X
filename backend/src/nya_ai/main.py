@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect, text
 
 from nya_ai.config import get_settings
 from nya_ai.database import Base, SessionLocal, engine
@@ -17,6 +18,11 @@ settings = get_settings()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
+    # create_all never adds columns to an existing table; add the ones introduced since the
+    # first release so an older dev database keeps working.
+    if "brief_json" not in {c["name"] for c in inspect(engine).get_columns("bookings")}:
+        with engine.begin() as conn:
+            conn.execute(text("ALTER TABLE bookings ADD COLUMN brief_json TEXT"))
     db = SessionLocal()
     try:
         seed_if_empty(db)

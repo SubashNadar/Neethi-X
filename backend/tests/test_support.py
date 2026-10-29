@@ -21,11 +21,13 @@ def _db():
         db.close()
 
 
-app.dependency_overrides[get_db] = _db
-client = TestClient(app)
+def _client() -> TestClient:
+    app.dependency_overrides[get_db] = _db
+    return TestClient(app)
 
 
 def test_support_message_gets_daily_ref():
+    client = _client()
     body = {"name": "Asha", "contact": "asha@example.com", "topic": "booking", "text": "My refund has not arrived yet."}
     first = client.post("/api/support", json=body)
     second = client.post("/api/support", json=body)
@@ -35,5 +37,6 @@ def test_support_message_gets_daily_ref():
 
 
 def test_support_message_rejects_short_text_and_unknown_topic():
+    client = _client()
     assert client.post("/api/support", json={"name": "A", "contact": "a@b.c", "topic": "other", "text": "hi"}).status_code == 422
     assert client.post("/api/support", json={"name": "A", "contact": "a@b.c", "topic": "sales", "text": "long enough text"}).status_code == 422

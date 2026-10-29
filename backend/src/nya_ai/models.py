@@ -89,9 +89,11 @@ class Booking(Base):
     user_id: Mapped[str] = mapped_column(String(32), ForeignKey("users.id"))
     client_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
     client_initials: Mapped[str | None] = mapped_column(String(4), nullable=True)
-    # Not collected anywhere in the real booking flow (UI reference §4 has no topic
-    # field) — only ever populated for the 3 seeded lawyer-portal demo requests.
+    # Set from the consult plan's topic when the user plans the call first; the 3 seeded
+    # lawyer-portal demo requests also carry one.
     topic: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    # Consult plan as JSON (facts, questions, goals), shared with the advocate. Null when skipped.
+    brief_json: Mapped[str | None] = mapped_column(Text, nullable=True)
     day_label: Mapped[str] = mapped_column(String(40))
     slot_label: Mapped[str] = mapped_column(String(20))
     consult_type: Mapped[str] = mapped_column(String(10))  # "Video" | "Phone"

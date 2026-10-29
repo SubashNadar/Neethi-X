@@ -3,6 +3,16 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Consult plan and call room (2026-10-29)
+
+Users can write a short brief (topic, facts, questions, goals) before booking. It is optional, stays
+in the browser tab until booking, then travels with the booking and is visible only to the user and
+the booked advocate. The booking `topic` comes from the brief. Document upload is not offered until
+there is private file storage. The call room opens for paid or accepted bookings. There is no video
+provider yet, so the room says plainly that the advocate phones the client; notes stay on the
+device. The law library admin screen is not built until the ingestion pipeline exists, so it never
+shows invented progress.
+
 ## Public information pages (2026-10-29)
 
 Legal, About, Contact and Help are public routes, so a signed-out visitor can read the disclaimer and

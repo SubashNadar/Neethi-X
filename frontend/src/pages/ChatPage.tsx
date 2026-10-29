@@ -383,7 +383,7 @@ export default function ChatPage() {
                   </div>
                 </motion.div>
               ) : (
-                messages.map((m) => {
+                messages.map((m, i) => {
                   if (m.id === 'greeting') return null
                   if (m.role === 'user') {
                     return (
@@ -394,7 +394,16 @@ export default function ChatPage() {
                     )
                   }
                   answerCount += 1
-                  return <Answer key={m.id} m={m} index={answerCount} onLawyer={() => navigate('/lawyers')} />
+                  return (
+                    <Answer
+                      key={m.id}
+                      m={m}
+                      index={answerCount}
+                      onLawyer={() =>
+                        navigate('/plan', { state: { question: messages[i - 1]?.role === 'user' ? messages[i - 1].text : '' } })
+                      }
+                    />
+                  )
                 })
               )}
               <AnimatePresence>{typing && <TypingIndicator />}</AnimatePresence>

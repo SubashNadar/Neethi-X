@@ -24,15 +24,15 @@ const USER_TABS: Tab[] = [
   {
     label: 'Lawyers',
     path: '/lawyers',
-    match: ['/lawyers', '/booking', '/pay', '/success'],
+    match: ['/lawyers', '/plan', '/booking', '/pay', '/success'],
     icon: Scale,
   },
-  { label: 'Bookings', path: '/bookings', match: ['/bookings'], icon: CalendarCheck },
+  { label: 'Bookings', path: '/bookings', match: ['/bookings', '/call'], icon: CalendarCheck },
   { label: 'Profile', path: '/account', match: ['/account'], icon: UserRound },
 ]
 
 const LAWYER_TABS: Tab[] = [
-  { label: 'Dashboard', path: '/portal', match: ['/portal'], icon: LayoutDashboard },
+  { label: 'Dashboard', path: '/portal', match: ['/portal', '/call'], icon: LayoutDashboard },
   { label: 'Messages', path: '/messages', match: ['/messages'], icon: MessagesSquare },
   { label: 'Profile', path: '/profile', match: ['/profile'], icon: UserRound },
 ]
@@ -46,7 +46,7 @@ export function BottomTabBar() {
   return (
     <nav className="flex flex-none border-t border-line bg-surface px-1.5 pb-3.5 pt-2 md:hidden">
       {tabs.map((tab) => {
-        const active = tab.match.some((m) => location.pathname.startsWith(m))
+        const active = tab.match.some((m) => location.pathname === m || location.pathname.startsWith(m + '/'))
         return (
           <button
             key={tab.label}

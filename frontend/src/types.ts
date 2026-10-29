@@ -48,6 +48,13 @@ export type BookingStatus =
   | 'declined'
   | 'completed'
 
+export interface ConsultBrief {
+  topic: string
+  facts: string
+  questions: string[]
+  goals: string[]
+}
+
 export interface Booking {
   id: string
   ref: string
@@ -56,6 +63,7 @@ export interface Booking {
   client_name: string | null
   client_initials: string | null
   topic: string | null
+  brief: ConsultBrief | null
   day_label: string
   slot_label: string
   consult_type: ConsultType

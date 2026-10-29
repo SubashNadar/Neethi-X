@@ -25,7 +25,7 @@ export function useNavItems(unreadThreads: number): NavItem[] {
   const { user } = useAuth()
   if (user?.role === 'lawyer') {
     return [
-      { label: 'Dashboard', path: '/portal', match: ['/portal'], icon: LayoutDashboard },
+      { label: 'Dashboard', path: '/portal', match: ['/portal', '/call'], icon: LayoutDashboard },
       {
         label: unreadThreads > 0 ? `Client Messages (${unreadThreads})` : 'Client Messages',
         path: '/messages',
@@ -40,10 +40,10 @@ export function useNavItems(unreadThreads: number): NavItem[] {
     {
       label: 'Find a Lawyer',
       path: '/lawyers',
-      match: ['/lawyers', '/booking', '/pay', '/success'],
+      match: ['/lawyers', '/plan', '/booking', '/pay', '/success'],
       icon: Scale,
     },
-    { label: 'My Consultations', path: '/dashboard', match: ['/dashboard'], icon: CalendarCheck },
+    { label: 'My Consultations', path: '/dashboard', match: ['/dashboard', '/bookings', '/call'], icon: CalendarCheck },
   ]
 }
 
@@ -53,7 +53,8 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
   const location = useLocation()
   const navItems = useNavItems(unreadThreads)
 
-  const isActive = (item: NavItem) => item.match.some((m) => location.pathname.startsWith(m))
+  const isActive = (item: NavItem) =>
+    item.match.some((m) => location.pathname === m || location.pathname.startsWith(m + '/'))
 
   return (
     <aside className="relative hidden w-[248px] flex-none flex-col overflow-hidden border-r border-line bg-navy-950/85 p-4 text-white backdrop-blur md:flex">

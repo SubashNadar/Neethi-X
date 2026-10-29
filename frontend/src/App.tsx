@@ -19,6 +19,8 @@ import LegalPage from './pages/LegalPage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import HelpPage from './pages/HelpPage'
+import ConsultPlanPage from './pages/ConsultPlanPage'
+import CallPage from './pages/CallPage'
 
 function homeFor(role: 'user' | 'lawyer' | undefined) {
   return role === 'lawyer' ? '/portal' : '/chat'
@@ -94,6 +96,15 @@ export default function App() {
             </RequireRole>
           }
         />
+        <Route
+          path="/plan"
+          element={
+            <RequireRole role="user">
+              <ConsultPlanPage />
+            </RequireRole>
+          }
+        />
+        <Route path="/call/:bookingId" element={<CallPage />} />
         <Route
           path="/booking/:lawyerId"
           element={

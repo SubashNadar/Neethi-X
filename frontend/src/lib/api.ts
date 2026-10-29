@@ -2,6 +2,7 @@ import axios, { type AxiosInstance } from 'axios'
 import type {
   Booking,
   ChatMessage,
+  ConsultBrief,
   ConsultType,
   LawyerDashboard,
   LawyerCard,
@@ -135,6 +136,7 @@ export async function createBooking(payload: {
   day_label: string
   slot_label: string
   consult_type: ConsultType
+  brief?: ConsultBrief | null
 }): Promise<Booking> {
   const { data } = await client.post('/bookings', payload)
   return data

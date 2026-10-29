@@ -16,23 +16,25 @@ const STATUS_CLASS: Record<BookingStatus, string> = {
   pending_payment: 'bg-warn-bg text-warn-text',
   paid: 'bg-soft text-primary',
   accepted: 'bg-success-bg text-success-dark',
-  declined: 'bg-[#EBEEF3] text-muted',
-  completed: 'bg-[#EBEEF3] text-muted',
+  declined: 'bg-soft text-muted',
+  completed: 'bg-soft text-muted',
 }
 
 // Same card layout as DashboardPage's upcoming-consultation card (lawyer avatar/initials/color,
 // name, day/slot/consult-type labels), plus status/ref/fee since this screen lists every booking
 // the user has rather than just the next one.
 function ConsultationCard({ booking }: { booking: Booking }) {
+  const navigate = useNavigate()
+  const open = booking.status === 'paid' || booking.status === 'accepted'
   return (
-    <div className="flex max-w-[640px] items-center gap-4 rounded-[20px] border border-line bg-surface p-5">
+    <div className="flex max-w-[640px] flex-wrap items-center gap-4 rounded-[20px] border border-line bg-surface p-5">
       <div
         className="flex h-[52px] w-[52px] flex-none items-center justify-center rounded-full text-[17px] font-bold text-white"
         style={{ background: booking.lawyer.avatar_color }}
       >
         {booking.lawyer.initials}
       </div>
-      <div className="min-w-0 flex-1">
+      <div className="min-w-[160px] flex-1">
         <div className="text-[15px] font-bold">{booking.lawyer.name}</div>
         <div className="mt-0.5 text-[13px] text-muted">
           {booking.day_label} · {booking.slot_label} · {booking.consult_type} · 30 min
@@ -46,6 +48,14 @@ function ConsultationCard({ booking }: { booking: Booking }) {
       >
         {STATUS_LABEL[booking.status]}
       </div>
+      {open && (
+        <button
+          onClick={() => navigate(`/call/${booking.id}`)}
+          className="w-full rounded-full bg-primary px-4 py-2 text-[13px] font-bold sm:w-auto sm:flex-none text-primary-foreground hover:bg-primary-hover"
+        >
+          Call room
+        </button>
+      )}
     </div>
   )
 }

@@ -44,11 +44,16 @@ Nya-AI is the only product.
 
 ## Log (newest first)
 
+- **2026-10-29** — Consult plan (`/plan`) and call room (`/call/:bookingId`). "Ask an advocate" in
+  chat opens the plan with the question as the facts; the plan is sent as `brief` with
+  `POST /api/bookings` (stored in `bookings.brief_json`, added to old dev DBs on boot) and shown to
+  the advocate in the portal and the call room. In-app video is not wired; the call room says the
+  advocate phones the client and offers agenda, brief and on-device notes. Law library admin waits
+  for the agent's ingestion pipeline. Fixed tab highlighting (`/bookings` also lit Lawyers).
 - **2026-10-29** — Public Legal, About, Contact and Help pages (`/legal`, `/about`, `/contact`,
   `/help`, shared `InfoLayout`, no sign-in needed), linked from sign-in, sidebar and Account. Contact
   form posts to `POST /api/support` (`SupportMessage`, refs `SUP-YYYYMMDD-###`). Placeholders such
-  as [SUPPORT EMAIL] and [OFFICER NAME] still need real values. Orbit screens not yet in the app:
-  law library admin, consult plan, live call, basics states board.
+  as [SUPPORT EMAIL] and [OFFICER NAME] still need real values.
 - **2026-10-29** — Orbit theme applied across the app (tokens in `tailwind.config.js`, grid in
   `index.css`); chat rebuilt to the Orbit layout (trace panel, cited ¶ answer, temporal panel).
   Orbit screens not yet in the app: law library admin, consult plan, live call, basics states board.

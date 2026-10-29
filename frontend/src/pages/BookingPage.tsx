@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { createBooking, getApiErrorMessage, getLawyer } from '../lib/api'
+import { clearPlan, loadPlan } from '../lib/plan'
+import { StepBar } from './ConsultPlanPage'
 import { ErrorState, LoadingState } from '../components/states'
 import type { ConsultType, LawyerDetail } from '../types'
 
@@ -31,6 +33,7 @@ export default function BookingPage() {
   const [consultType, setConsultType] = useState<ConsultType>('Video')
   const [booking, setBooking] = useState(false)
   const [bookError, setBookError] = useState<string | null>(null)
+  const [plan, setPlan] = useState(loadPlan)
 
   function load() {
     if (!lawyerId) return
@@ -54,7 +57,9 @@ export default function BookingPage() {
         day_label: days[selDay],
         slot_label: SLOTS[selSlot],
         consult_type: consultType,
+        brief: plan,
       })
+      clearPlan()
       navigate(`/pay/${b.id}`)
     } catch (err) {
       setBookError(getApiErrorMessage(err))
@@ -76,6 +81,9 @@ export default function BookingPage() {
       >
         ← Back to lawyers
       </button>
+      <div className="mt-3">
+        <StepBar current={1} />
+      </div>
 
       <div className="mt-4 flex max-w-[980px] flex-col gap-6 lg:flex-row lg:items-start">
         <div className="flex-[1.4]">
@@ -155,6 +163,27 @@ export default function BookingPage() {
           <div className="mt-2.5 flex justify-between text-sm">
             <span className="text-muted">Type</span>
             <span className="font-semibold">{consultType} · 30 min</span>
+          </div>
+          <div className="mt-2.5 flex justify-between gap-3 text-sm">
+            <span className="text-muted">Brief</span>
+            {plan ? (
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="truncate font-semibold">{plan.topic}</span>
+                <button
+                  onClick={() => {
+                    clearPlan()
+                    setPlan(null)
+                  }}
+                  className="flex-none text-[12px] text-muted underline-offset-2 hover:underline"
+                >
+                  Remove
+                </button>
+              </span>
+            ) : (
+              <Link to="/plan" className="font-semibold text-primary hover:underline">
+                Plan the call first
+              </Link>
+            )}
           </div>
           <div className="my-4 h-px bg-line" />
           <div className="flex justify-between text-sm">
