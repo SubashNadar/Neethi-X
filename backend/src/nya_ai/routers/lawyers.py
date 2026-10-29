@@ -3,9 +3,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
-from neethi.database import get_db
-from neethi.models import Lawyer
-from neethi.schemas import LawyerCard, LawyerDetail, LawyersListOut
+from nya_ai.database import get_db
+from nya_ai.models import Lawyer
+from nya_ai.schemas import LawyerCard, LawyerDetail, LawyersListOut
 
 router = APIRouter(prefix="/lawyers", tags=["lawyers"])
 

@@ -18,7 +18,7 @@ interface Tab {
 }
 
 // Lawyer-role mobile tabs are a documented default (no source in the demo covers mobile+lawyer) —
-// see .claude/NEETHI_OPEN_QUESTIONS.md.
+// see docs/DECISIONS.md.
 const USER_TABS: Tab[] = [
   { label: 'Chat', path: '/chat', match: ['/chat'], icon: MessageSquareText },
   {

@@ -10,13 +10,13 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from neethi.config import get_settings
-from neethi.database import get_db
-from neethi.models import RevokedToken, User
+from nya_ai.config import get_settings
+from nya_ai.database import get_db
+from nya_ai.models import RevokedToken, User
 
 settings = get_settings()
 
-# Demo OTP convention (see .claude/NEETHI_UI_REFERENCE.md §1 "Login"): the mockup hardcodes
+# Demo OTP convention (see the original design spec "Login"): the mockup hardcodes
 # `1234`; the real backend accepts *any* 4-digit string instead of one magic value.
 OTP_RE = re.compile(r"^\d{4}$")
 
@@ -31,7 +31,7 @@ def normalize_phone(phone: str) -> str:
     """Light normalization: strip everything but digits, keep last 10 (Indian mobile).
 
     Contract doesn't specify phone validation rules (demo has no real SMS provider).
-    Smallest reversible default — see .claude/NEETHI_OPEN_QUESTIONS.md.
+    Smallest reversible default — see docs/DECISIONS.md.
     """
     digits = re.sub(r"\D", "", phone)
     return digits[-10:] if len(digits) >= 10 else digits

@@ -1,6 +1,6 @@
 """Proves the Razorpay signature-verification wiring is correct, without any real
 Razorpay test keys (none are available in this environment — see
-.claude/NEETHI_OPEN_QUESTIONS.md "Real Razorpay integration" entry). Uses the SDK's own
+docs/DECISIONS.md "Real Razorpay integration" entry). Uses the SDK's own
 `verify_payment_signature` helper against a manually-HMAC'd signature computed with a
 fake, locally-generated secret — no invented Razorpay-looking order/payment ids are
 sourced or presented as real.

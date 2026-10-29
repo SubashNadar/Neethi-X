@@ -1,23 +1,23 @@
 """Seeds the 4 demo lawyers, the canonical demo-lawyer login, 3 lawyer-portal
-requests and 3 message threads — exact data from .claude/NEETHI_UI_REFERENCE.md §3, §8, §9.
+requests and 3 message threads — exact data from the original design spec
 """
 
 from datetime import date, datetime, timezone
 
 from sqlalchemy.orm import Session
 
-from neethi.models import Booking, Lawyer, MessageThread, ThreadMessage, User
+from nya_ai.models import Booking, Lawyer, MessageThread, ThreadMessage, User
 
 # bar_council_id / bio are only given in the UI reference for Meera Krishnan's profile
 # screen (§10). The other three lawyers have no sourced bio/registration text anywhere
 # in the demo, so a fabricated-looking bar council number would violate the guardrails'
 # "never present a fabricated ... business number as if it were sourced" rule. These
-# use a clearly generic placeholder instead — see .claude/NEETHI_OPEN_QUESTIONS.md.
+# use a clearly generic placeholder instead — see docs/DECISIONS.md.
 GENERIC_BAR_ID = "Bar Council verified — registration on file"
 
 
 def _generic_bio(spec: str, exp: int) -> str:
-    return f"{exp} years practicing {spec} in India. Bar Council verified by Neethi-X."
+    return f"{exp} years practicing {spec} in India. Bar Council verified by Nya-AI."
 
 
 LAWYERS = [
@@ -128,7 +128,7 @@ MESSAGE_THREADS = [
             (
                 "client",
                 "Sir, my landlord in Chennai is refusing to return my ₹50,000 deposit "
-                "even 2 months after I vacated. Neethi told me about the Model Tenancy "
+                "even 2 months after I vacated. Nya-AI told me about the Model Tenancy "
                 "Act — can you help me send a legal notice?",
             ),
         ],
@@ -189,14 +189,14 @@ def seed_if_empty(db: Session) -> None:
     # Canonical demo-lawyer login identity, linked to Meera — the portal header is
     # hardcoded to "Adv. Meera Krishnan · Criminal Law · Bar Council TN/1123/2014" in
     # the UI reference (§8), so both "Explore as demo lawyer" and any phone/OTP login
-    # taken with role=lawyer resolve to this same account. See .claude/NEETHI_OPEN_QUESTIONS.md.
+    # taken with role=lawyer resolve to this same account. See docs/DECISIONS.md.
     demo_lawyer_user = User(
         role="lawyer",
         name=meera.name,
         initials=meera.initials,
         # User-supplied demo number so lawyer-OTP login (role="lawyer") is actually
         # reachable end-to-end, not just a correct-but-unreachable code path — see
-        # .claude/NEETHI_OPEN_QUESTIONS.md "Resolution pass with user, 2026-07-18".
+        # docs/DECISIONS.md "Resolution pass with user, 2026-07-18".
         phone="1234567890",
         lawyer_id=meera.id,
     )

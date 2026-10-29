@@ -5,11 +5,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from neethi.config import get_settings
-from neethi.database import Base, SessionLocal, engine
-from neethi.models import RevokedToken, utcnow
-from neethi.routers import auth, bookings, chat, dashboard, lawyers, messages, payments
-from neethi.seed import seed_if_empty
+from nya_ai.config import get_settings
+from nya_ai.database import Base, SessionLocal, engine
+from nya_ai.models import RevokedToken, utcnow
+from nya_ai.routers import auth, bookings, chat, dashboard, lawyers, messages, payments
+from nya_ai.seed import seed_if_empty
 
 settings = get_settings()
 
@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
     try:
         seed_if_empty(db)
         # Bound the revoked_tokens table without needing a cron job — see
-        # .claude/NEETHI_OPEN_QUESTIONS.md "Resolution pass with user, 2026-07-18" (#9).
+        # docs/DECISIONS.md "Resolution pass with user, 2026-07-18" (#9).
         db.query(RevokedToken).filter(RevokedToken.expires_at < utcnow()).delete()
         db.commit()
     finally:
@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Neethi-X API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="Nya-AI API", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

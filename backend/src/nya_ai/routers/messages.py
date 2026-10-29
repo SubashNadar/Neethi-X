@@ -1,16 +1,16 @@
 """Lawyer inbox (Lawyer Messages screen) endpoints.
 
 Not in the original endpoint plan — added by the frontend build and implemented here to
-match; see .claude/NEETHI_OPEN_QUESTIONS.md "Messages endpoints missing from the API contract".
+match; see docs/DECISIONS.md "Messages endpoints missing from the API contract".
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from neethi.auth import get_current_user
-from neethi.database import get_db
-from neethi.models import MessageThread, ThreadMessage, User
-from neethi.schemas import (
+from nya_ai.auth import get_current_user
+from nya_ai.database import get_db
+from nya_ai.models import MessageThread, ThreadMessage, User
+from nya_ai.schemas import (
     MessageOut,
     MessageThreadOut,
     MessageThreadsListOut,

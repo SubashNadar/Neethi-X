@@ -5,15 +5,15 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from neethi.auth import get_current_user
-from neethi.database import get_db
-from neethi.models import Booking, ChatMessage, Lawyer, User
-from neethi.routers.bookings import _to_out
-from neethi.schemas import LawyerDashboardOut, RecentQuestion, UserDashboardOut
+from nya_ai.auth import get_current_user
+from nya_ai.database import get_db
+from nya_ai.models import Booking, ChatMessage, Lawyer, User
+from nya_ai.routers.bookings import _to_out
+from nya_ai.schemas import LawyerDashboardOut, RecentQuestion, UserDashboardOut
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
-# Canned older examples, reproduced verbatim from .claude/NEETHI_UI_REFERENCE.md §7 "Recent
+# Canned older examples, reproduced verbatim from the original design spec "Recent
 # questions" — the demo hardcodes these two regardless of what the user actually asked.
 CANNED_QUESTIONS = [
     RecentQuestion(q="Can my society stop me from keeping a pet?", when="2 days ago"),

@@ -104,7 +104,7 @@ export default function LoginPage() {
             Legal help, finally <span className="italic text-brass-light">within reach.</span>
           </h1>
           <p className="mt-5 text-[16px] leading-[1.7] text-white/70">
-            90% of Indians can't afford a lawyer. Ask Neethi anything about your rights — free, instant,
+            90% of Indians can't afford a lawyer. Ask Nya-AI anything about your rights — free, instant,
             24×7. Talk to a verified lawyer only when you need one, from ₹500.
           </p>
           <div className="mt-8 grid grid-cols-3 gap-3">
@@ -119,7 +119,7 @@ export default function LoginPage() {
         <div className="relative rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
           <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
             <Sparkles className="size-3.5 text-brass-light" />
-            Ask Neethi
+            Ask Nya-AI
           </div>
           <div className="mt-3 ml-auto w-fit rounded-2xl rounded-tr-md bg-white/10 px-3.5 py-2 text-[13px]">
             How do I file an FIR?
@@ -226,7 +226,7 @@ export default function LoginPage() {
                 {guestLabel}
               </button>
             <div className="mt-5 text-[11.5px] leading-relaxed text-faint">
-              By continuing you agree to our Terms. Neethi gives legal information, not legal advice.
+              By continuing you agree to our Terms. Nya-AI gives legal information, not legal advice.
             </div>
           </motion.div>
         </div>

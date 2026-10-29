@@ -80,8 +80,8 @@ export default function BookingsPage() {
         <div className="mt-3 max-w-[640px]">
           <EmptyState
             title="No consultations yet"
-            description="Ask Neethi first — it's free. Book a lawyer only if you need one."
-            actionLabel="Ask Neethi"
+            description="Ask Nya-AI first — it's free. Book a lawyer only if you need one."
+            actionLabel="Ask Nya-AI"
             onAction={() => navigate('/chat')}
           />
         </div>

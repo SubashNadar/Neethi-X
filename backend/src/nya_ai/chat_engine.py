@@ -1,6 +1,6 @@
 """Chat answer generation: keyword rule engine (always available) + optional Claude API.
 
-The rule-engine copy below is reproduced verbatim from .claude/NEETHI_UI_REFERENCE.md
+The rule-engine copy below is reproduced verbatim from the original design spec
 §"Rule-engine responses" — do not paraphrase it. Keyword groups are checked in the
 exact order listed there; within a group, `message.lower()` substring match, first
 group to match wins.
@@ -9,9 +9,9 @@ group to match wins.
 import json
 import logging
 
-from neethi.config import get_settings
+from nya_ai.config import get_settings
 
-logger = logging.getLogger("neethi.chat_engine")
+logger = logging.getLogger("nya_ai.chat_engine")
 
 RULES: list[dict] = [
     {
@@ -91,7 +91,7 @@ FALLBACK = {
     "citation": "",
 }
 
-ANTHROPIC_SYSTEM_PROMPT = """You are Neethi, the AI legal assistant inside the Neethi-X app for India. \
+ANTHROPIC_SYSTEM_PROMPT = """You are Nya-AI, an AI legal assistant for India. \
 You explain Indian law (IPC, CrPC, central acts) in plain, reassuring language, grounded in real \
 statutes and sections. You provide legal information, not legal advice — never claim to be a lawyer.
 

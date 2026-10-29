@@ -38,7 +38,7 @@ const PRINCIPLES: { icon: LucideIcon; title: string; body: string }[] = [
 const GREETING: ChatMessage = {
   id: 'greeting',
   role: 'ai',
-  text: "Namaste! I'm Neethi, your free AI legal assistant. Ask me anything — theft, rent disputes, FIRs, divorce, salary issues — and I'll explain your rights in plain language, grounded in Indian law.",
+  text: "Namaste! I'm Nya-AI, your free AI legal assistant. Ask me anything — theft, rent disputes, FIRs, divorce, salary issues — and I'll explain your rights in plain language, grounded in Indian law.",
   points: [],
   citation: '',
   cta: false,
@@ -51,7 +51,7 @@ const enter = {
   transition: { duration: 0.25, ease: 'easeOut' },
 } as const
 
-function NeethiAvatar() {
+function NyaAvatar() {
   return (
     <div className="relative mt-0.5 flex size-9 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-navy-600 to-navy-900 font-heading text-sm font-extrabold text-white shadow-sm">
       N
@@ -97,7 +97,7 @@ function CopyAnswer({ message }: { message: ChatMessage }) {
 function TypingIndicator() {
   return (
     <motion.div {...enter} exit={{ opacity: 0 }} className="flex items-start gap-3 self-start">
-      <NeethiAvatar />
+      <NyaAvatar />
       <div className="flex w-fit items-center gap-1.5 rounded-2xl rounded-tl-md border border-line bg-surface px-5 py-4 shadow-card">
         <span className="h-[7px] w-[7px] animate-dotpulse rounded-full bg-primary [animation-delay:0s]" />
         <span className="h-[7px] w-[7px] animate-dotpulse rounded-full bg-primary [animation-delay:0.15s]" />
@@ -110,11 +110,11 @@ function TypingIndicator() {
 function AiAnswer({ m, onLawyer }: { m: ChatMessage; onLawyer: () => void }) {
   return (
     <motion.div {...enter} className="flex w-full items-start gap-3">
-      <NeethiAvatar />
+      <NyaAvatar />
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <div className="overflow-hidden rounded-2xl rounded-tl-md border border-line bg-surface shadow-card">
           <div className="flex items-center gap-2 border-b border-line/70 px-5 py-2.5">
-            <span className="text-[13px] font-bold text-ink">Neethi</span>
+            <span className="text-[13px] font-bold text-ink">Nya-AI</span>
             <span className="rounded-full bg-soft px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-wide text-primary">
               Legal information
             </span>
@@ -196,7 +196,7 @@ function SidePanel({ onLawyer }: { onLawyer: () => void }) {
         </Button>
       </div>
       <div className="rounded-2xl border border-line bg-surface p-5">
-        <div className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-faint">How Neethi answers</div>
+        <div className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-faint">How Nya-AI answers</div>
         <div className="mt-4 flex flex-col gap-4">
           {PRINCIPLES.map((p) => (
             <div key={p.title} className="flex gap-3">
@@ -282,7 +282,7 @@ export default function ChatPage() {
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <div className="flex flex-none items-center gap-3 border-b border-line bg-surface/80 px-5 py-3.5 backdrop-blur md:px-8">
           <div className="flex-1">
-            <div className="font-heading text-[17px] font-bold">Neethi — AI Legal Assistant</div>
+            <div className="font-heading text-[17px] font-bold">Nya-AI — AI Legal Assistant</div>
             <div className="text-xs text-muted">Grounded in the Indian Penal Code &amp; central acts</div>
           </div>
           <div className="flex items-center gap-1.5 rounded-full border border-success-border bg-success-bg px-3 py-1.5 text-xs font-semibold text-success-text">
@@ -305,10 +305,10 @@ export default function ChatPage() {
                   </div>
                 </div>
                 <h1 className="mt-6 font-display text-[30px] font-semibold leading-tight tracking-[-0.01em] text-ink md:text-[38px]">
-                  Namaste! I'm Neethi.
+                  Namaste! I'm Nya-AI.
                 </h1>
                 <p className="mt-3 max-w-[560px] text-[15px] leading-[1.65] text-body2">
-                  {GREETING.text.replace(/^Namaste! I'm Neethi, your/, 'Your')}
+                  {GREETING.text.replace(/^Namaste! I'm Nya-AI, your/, 'Your')}
                 </p>
                 <div className="mt-8 grid w-full grid-cols-1 gap-3 text-left sm:grid-cols-2">
                   {QUICK_REPLIES.map((q, i) => (
@@ -381,7 +381,7 @@ export default function ChatPage() {
             </div>
             <div className="mt-2 flex items-center justify-center gap-1.5 text-center text-[11.5px] text-muted">
               <ShieldAlert className="size-3.5 flex-none text-warn-text" />
-              Neethi provides legal information, not legal advice. For advice specific to your case, consult a
+              Nya-AI provides legal information, not legal advice. For advice specific to your case, consult a
               lawyer.
             </div>
           </div>

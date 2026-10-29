@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
-from neethi.auth import (
+from nya_ai.auth import (
     _bearer,
     create_access_token,
     decode_access_token,
@@ -14,9 +14,9 @@ from neethi.auth import (
     is_valid_otp,
     normalize_phone,
 )
-from neethi.database import get_db
-from neethi.models import RevokedToken, User, utcnow
-from neethi.schemas import (
+from nya_ai.database import get_db
+from nya_ai.models import RevokedToken, User, utcnow
+from nya_ai.schemas import (
     GuestIn,
     LogoutOut,
     MeOut,
@@ -34,7 +34,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 def request_otp(payload: OtpRequestIn) -> OtpRequestOut:
     if not normalize_phone(payload.phone):
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Invalid phone number")
-    # No real SMS provider (demo convenience, see .claude/NEETHI_UI_REFERENCE.md §1) — nothing
+    # No real SMS provider (demo convenience, see the original design spec) — nothing
     # to send, just acknowledge so the frontend can show the OTP step.
     return OtpRequestOut(sent=True)
 
@@ -51,7 +51,7 @@ def verify_otp(payload: OtpVerifyIn, db: Session = Depends(get_db)) -> TokenOut:
 
     if payload.role == "lawyer":
         # Lawyer OTP login only matches an existing seeded lawyer account by phone —
-        # never auto-creates one. See .claude/NEETHI_OPEN_QUESTIONS.md "Resolution pass
+        # never auto-creates one. See docs/DECISIONS.md "Resolution pass
         # with user, 2026-07-18" (#4).
         user = db.query(User).filter(User.phone == phone, User.role == "lawyer").first()
         if user is None:

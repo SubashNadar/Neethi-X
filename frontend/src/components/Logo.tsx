@@ -1,31 +1,39 @@
+// Nya-AI mark: scales of justice inside a dashed orbit ring, with a satellite dot.
 export function LogoMark({ size = 38, tone = 'navy' }: { size?: number; tone?: 'navy' | 'brass' }) {
+  const stroke = tone === 'brass' ? '#D9B56E' : '#1F3A5F'
   return (
-    <div
-      className={`relative flex flex-shrink-0 items-center justify-center rounded-xl font-heading font-extrabold text-white shadow-sm ${
-        tone === 'brass'
-          ? 'bg-gradient-to-br from-brass-light to-brass-dark'
-          : 'bg-gradient-to-br from-navy-600 to-navy-900'
-      }`}
-      style={{ width: size, height: size, fontSize: Math.round(size * 0.52) }}
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      stroke={stroke}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="flex-shrink-0"
     >
-      N
-      <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/15" />
-    </div>
+      <circle cx="32" cy="32" r="28" strokeWidth="2" strokeDasharray="2.5 3.5" />
+      <circle cx="51.8" cy="12.2" r="4" fill={stroke} stroke="none" />
+      <path d="M32 15v31M19 21.5h26M24 47h16" strokeWidth="3.2" />
+      <path d="M15 32.5a6 3.6 0 0 0 12 0zM37 32.5a6 3.6 0 0 0 12 0z" strokeWidth="2.6" />
+    </svg>
   )
 }
 
 export function BrandLockup({ inverted = false }: { inverted?: boolean }) {
   return (
-    <div className="flex items-center gap-3.5">
+    <div className="flex items-center gap-3">
       <LogoMark tone={inverted ? 'brass' : 'navy'} />
       <div className="flex flex-col leading-none">
         <span
-          className={`font-heading text-[19px] font-bold leading-none ${inverted ? 'text-white' : 'text-ink'}`}
+          className={`font-display text-[21px] font-semibold leading-none ${inverted ? 'text-brass-soft' : 'text-ink'}`}
         >
-          Neethi-X
+          Nya
+          <span className={`font-mono text-[15px] ${inverted ? 'text-brass-light' : 'text-brass-dark'}`}>·AI</span>
         </span>
-        <span className={`mt-[3px] text-xs ${inverted ? 'text-white/55' : 'text-muted'}`}>
-          AI legal help for every Indian
+        <span className={`mt-[4px] font-mono text-[10.5px] tracking-[0.12em] ${inverted ? 'text-white/55' : 'text-muted'}`}>
+          INDIAN LAW, CITED
         </span>
       </div>
     </div>

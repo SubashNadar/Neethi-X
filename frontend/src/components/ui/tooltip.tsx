@@ -1,4 +1,4 @@
-// Adapted from shadcn/ui (MIT, https://github.com/shadcn-ui/ui) for Tailwind 3 and the Neethi palette.
+// Adapted from shadcn/ui (MIT, https://github.com/shadcn-ui/ui) for Tailwind 3 and the Nya-AI palette.
 
 import * as React from "react"
 import { cn } from "@/lib/utils"

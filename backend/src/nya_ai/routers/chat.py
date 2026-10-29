@@ -6,11 +6,11 @@ import uuid
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
-from neethi.auth import get_current_user_optional
-from neethi.chat_engine import get_answer
-from neethi.database import get_db
-from neethi.models import ChatMessage, User
-from neethi.schemas import ChatHistoryOut, ChatMessageIn, ChatMessageOut, ChatMessageRecord
+from nya_ai.auth import get_current_user_optional
+from nya_ai.chat_engine import get_answer
+from nya_ai.database import get_db
+from nya_ai.models import ChatMessage, User
+from nya_ai.schemas import ChatHistoryOut, ChatMessageIn, ChatMessageOut, ChatMessageRecord
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -51,7 +51,7 @@ def send_message(
     answer = get_answer(payload.message)
     # The static greeting ("cta: false") is rendered client-side and never round-trips
     # through this endpoint, so every real reply generated here sets cta unconditionally
-    # true, per .claude/NEETHI_UI_REFERENCE.md §2 ("every AI answer after the greeting").
+    # true, per the original design spec ("every AI answer after the greeting").
     ai_message = ChatMessage(
         conversation_id=conversation_id,
         user_id=user_id,

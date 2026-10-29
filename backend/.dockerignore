@@ -2,7 +2,7 @@
 __pycache__/
 **/__pycache__/
 *.pyc
-neethi.db
+nya_ai.db
 tests/
 .ruff_cache/
 .env

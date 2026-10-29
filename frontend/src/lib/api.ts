@@ -17,7 +17,7 @@ import type {
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000/api'
 
-const TOKEN_STORAGE_KEY = 'neethi_token'
+const TOKEN_STORAGE_KEY = 'nya_ai_token'
 
 export function getStoredToken(): string | null {
   return localStorage.getItem(TOKEN_STORAGE_KEY)
@@ -204,7 +204,7 @@ export async function getLawyerDashboard(): Promise<LawyerDashboard> {
   return data
 }
 
-// ---- Messages (lawyer inbox — see .claude/NEETHI_OPEN_QUESTIONS.md) ----
+// ---- Messages (lawyer inbox — see docs/DECISIONS.md) ----
 
 export async function getMessageThreads(): Promise<{ threads: MessageThread[] }> {
   const { data } = await client.get('/messages/threads')

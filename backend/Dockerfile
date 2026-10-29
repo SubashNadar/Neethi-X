@@ -16,4 +16,4 @@ ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "neethi.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "nya_ai.main:app", "--host", "0.0.0.0", "--port", "8000"]

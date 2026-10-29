@@ -11,7 +11,7 @@ export default {
           hover: '#15263C',
           foreground: '#FFFFFF',
         },
-        // shadcn/ui token names, mapped onto the Neethi palette above
+        // shadcn/ui token names, mapped onto the Nya-AI palette above
         background: '#FFFFFF',
         foreground: '#1B2430',
         border: '#E2E7EF',
@@ -61,6 +61,7 @@ export default {
         heading: ['"Bricolage Grotesque"', 'sans-serif'],
         body: ['Figtree', 'sans-serif'],
         display: ['Fraunces', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
         soft: '0 8px 24px rgba(120,90,50,0.10)',

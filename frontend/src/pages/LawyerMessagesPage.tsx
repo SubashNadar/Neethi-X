@@ -30,7 +30,7 @@ export default function LawyerMessagesPage() {
 
   // Opening a thread explicitly marks it read server-side via PATCH .../read (the only way to
   // clear `unread` — there is no implicit clear-on-view/reply side effect anymore, see
-  // .claude/NEETHI_OPEN_QUESTIONS.md). The thread list already carries each thread's messages,
+  // docs/DECISIONS.md). The thread list already carries each thread's messages,
   // so no separate full-thread fetch is needed — just merge the updated thread back in.
   useEffect(() => {
     if (!selId) return

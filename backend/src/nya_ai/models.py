@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from neethi.database import Base
+from nya_ai.database import Base
 
 
 def gen_id() -> str:
@@ -105,7 +105,7 @@ class Booking(Base):
 
 class PaymentOrder(Base):
     """Real Razorpay order (see routers/payments.py). Replaces the earlier simulated
-    version — see .claude/NEETHI_OPEN_QUESTIONS.md "Real Razorpay integration" entry.
+    version — see docs/DECISIONS.md "Real Razorpay integration" entry.
     """
 
     __tablename__ = "payment_orders"
@@ -148,7 +148,7 @@ class MessageThread(Base):
     """Lawyer <-> client message thread (Lawyer Messages screen).
 
     Exposed via routers/messages.py (added during the frontend build to cover a gap
-    in the original endpoint plan; see .claude/NEETHI_OPEN_QUESTIONS.md).
+    in the original endpoint plan; see docs/DECISIONS.md).
     """
 
     __tablename__ = "message_threads"
@@ -176,7 +176,7 @@ class RevokedToken(Base):
     """Server-side logout invalidation: one row per revoked JWT (by its `jti` claim).
 
     Lets `POST /api/auth/logout` take effect immediately even though JWTs are
-    otherwise stateless — see .claude/NEETHI_OPEN_QUESTIONS.md "Resolution pass with
+    otherwise stateless — see docs/DECISIONS.md "Resolution pass with
     user, 2026-07-18" (#9). Expired rows are pruned on logout and on app startup so
     the table stays bounded without a cron job.
     """

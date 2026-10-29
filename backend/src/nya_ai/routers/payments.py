@@ -1,7 +1,7 @@
 """Payment endpoints — real Razorpay integration (Orders API + Checkout + webhooks).
 
 Lawyer payouts stay manual-settlement only (no Razorpay Route / linked accounts /
-automated split-payout) — see .claude/NEETHI_OPEN_QUESTIONS.md "Real Razorpay
+automated split-payout) — see docs/DECISIONS.md "Real Razorpay
 integration" entry for the full scoping decision.
 
 When Razorpay keys are unset, `/order` and the webhook return 503 at request time; the
@@ -16,12 +16,12 @@ import razorpay.errors
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
-from neethi.auth import get_current_user
-from neethi.config import get_settings
-from neethi.database import get_db
-from neethi.models import Booking, Lawyer, PaymentOrder, User, WebhookEvent
-from neethi.routers.bookings import _get_owned_booking, _to_out
-from neethi.schemas import (
+from nya_ai.auth import get_current_user
+from nya_ai.config import get_settings
+from nya_ai.database import get_db
+from nya_ai.models import Booking, Lawyer, PaymentOrder, User, WebhookEvent
+from nya_ai.routers.bookings import _get_owned_booking, _to_out
+from nya_ai.schemas import (
     PaymentConfirmIn,
     PaymentConfirmOut,
     PaymentOrderIn,
@@ -29,7 +29,7 @@ from neethi.schemas import (
     PrefillOut,
 )
 
-logger = logging.getLogger("neethi.payments")
+logger = logging.getLogger("nya_ai.payments")
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 
@@ -229,7 +229,7 @@ async def razorpay_webhook(request: Request, db: Session = Depends(get_db)) -> d
         if order is not None:
             order.status = "failed"
             # booking intentionally LEFT at pending_payment (retryable) — confirmed
-            # default, see .claude/NEETHI_OPEN_QUESTIONS.md.
+            # default, see docs/DECISIONS.md.
 
     db.commit()
     return {"status": "ok"}

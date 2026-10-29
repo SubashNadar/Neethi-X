@@ -2,7 +2,7 @@
 backend/.venv/
 **/__pycache__/
 *.pyc
-backend/neethi.db
+backend/nya_ai.db
 backend/*.db
 .ruff_cache/
 

@@ -36,7 +36,7 @@ export function useNavItems(unreadThreads: number): NavItem[] {
     ]
   }
   return [
-    { label: 'Chat with Neethi', path: '/chat', match: ['/chat'], icon: MessageSquareText },
+    { label: 'Chat with Nya-AI', path: '/chat', match: ['/chat'], icon: MessageSquareText },
     {
       label: 'Find a Lawyer',
       path: '/lawyers',
@@ -105,7 +105,7 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
           />
           <div className="relative flex items-center gap-2">
             <Crown className="size-4 text-brass-light" />
-            <div className="font-heading text-[15px] font-bold">Neethi Plus</div>
+            <div className="font-heading text-[15px] font-bold">Nya-AI Plus</div>
           </div>
           <div className="relative mt-1.5 text-xs leading-relaxed text-white/65">
             Unlimited AI chats + 1 free consult every month.

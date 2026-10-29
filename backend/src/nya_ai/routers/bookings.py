@@ -6,11 +6,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from neethi.auth import get_current_user
-from neethi.database import get_db
-from neethi.models import Booking, Lawyer, User
-from neethi.routers.lawyers import _to_card
-from neethi.schemas import BookingIn, BookingOut, BookingRespondIn, BookingsListOut
+from nya_ai.auth import get_current_user
+from nya_ai.database import get_db
+from nya_ai.models import Booking, Lawyer, User
+from nya_ai.routers.lawyers import _to_card
+from nya_ai.schemas import BookingIn, BookingOut, BookingRespondIn, BookingsListOut
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 

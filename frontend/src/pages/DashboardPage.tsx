@@ -52,7 +52,7 @@ export default function DashboardPage() {
             className="inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-b from-brass-light to-brass px-5 py-2.5 text-[13px] font-bold text-navy-950 shadow-card transition-transform hover:-translate-y-0.5"
           >
             <MessageSquareText className="size-4" />
-            Ask Neethi
+            Ask Nya-AI
           </button>
         </div>
       </div>
@@ -107,14 +107,14 @@ export default function DashboardPage() {
           <div className="flex-1">
             <div className="text-sm font-bold">No consultations yet</div>
             <div className="mt-0.5 text-[13px] text-body2">
-              Ask Neethi first — it's free. Book a lawyer only if you need one.
+              Ask Nya-AI first — it's free. Book a lawyer only if you need one.
             </div>
           </div>
           <button
             onClick={() => navigate('/chat')}
             className="whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-primary-hover"
           >
-            Ask Neethi
+            Ask Nya-AI
           </button>
         </div>
       )}

@@ -51,7 +51,7 @@ export default function PaymentPage() {
         amount: order.amount,
         currency: order.currency,
         order_id: order.razorpay_order_id,
-        name: 'Neethi-X',
+        name: 'Nya-AI',
         description: `${booking.consult_type} consult · ${booking.lawyer.name}`,
         prefill: {
           name: order.prefill.name ?? undefined,
