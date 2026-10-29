@@ -30,7 +30,8 @@ docker compose up -d          # Postgres + pgvector on 5433, Langfuse on http://
 cp .env.example .env          # add your Azure endpoint and key
 uv sync
 uv run nya-agent setup        # tables, acts, section map
-# put the four India Code PDFs in data/raw/ (see data/SOURCES.md), then:
+uv run nya-agent fetch        # the four India Code PDFs into data/raw/ (see data/SOURCES.md)
+uv run nya-agent count        # parse them and check section counts; no database or Azure needed
 uv run nya-agent ingest       # BNS BNSS BSA IPC
 uv run nya-agent golden ../../legal-docs-platform/evals/GOLDEN-QUERIES.md
 uv run nya-agent search "My phone was stolen in March 2024" --as-of 2024-03-12
@@ -53,7 +54,7 @@ running. No Azure key is needed for tests.
 ## Notes
 
 - The parser was built against India Code's printed layout (`303. Theft.—(1) Whoever ...`) and
-  tested on a synthetic fixture. Check its section counts on the real PDFs first: the BNS should
+  tested on a synthetic fixture. Check its section counts on the real PDFs first with `nya-agent count`: the BNS should
   give 358 sections, the BNSS 531, the BSA 170 and the IPC 511 numbered sections (plus lettered
   ones such as 498A).
 - Pinned versions: llama-index-core 0.14, langgraph 1.2, langfuse 5.0. Two workarounds are noted in

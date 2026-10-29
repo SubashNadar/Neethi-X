@@ -1,4 +1,4 @@
-"""`uv run nya-agent <command>`: setup, ingest, golden, search, status."""
+"""`uv run nya-agent <command>`: fetch, count, setup, ingest, golden, search, status."""
 
 import argparse
 from datetime import date
@@ -13,6 +13,11 @@ def main() -> None:
     p = argparse.ArgumentParser(prog="nya-agent", description="Nya-AI law library (release R0)")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("setup", help="create tables, register the acts and load the IPC to BNS map")
+    f = sub.add_parser("fetch", help="download the official India Code PDFs into nya-ai/data/raw/")
+    f.add_argument("acts", nargs="*", default=["BNS", "BNSS", "BSA", "IPC"])
+    f.add_argument("--force", action="store_true", help="download again even if the file exists")
+    cnt = sub.add_parser("count", help="parse the PDFs and check section counts (no database, no Azure)")
+    cnt.add_argument("acts", nargs="*", default=["BNS", "BNSS", "BSA", "IPC"])
     ing = sub.add_parser("ingest", help="ingest acts from nya-ai/data/raw/")
     ing.add_argument("acts", nargs="*", default=["BNS", "BNSS", "BSA", "IPC"])
     gold = sub.add_parser("golden", help="check golden-set sections against the ingested text")
@@ -22,6 +27,31 @@ def main() -> None:
     s.add_argument("--as-of", type=date.fromisoformat, default=None, help="date the law is needed for")
     sub.add_parser("status", help="acts and the last ingestion jobs")
     args = p.parse_args()
+
+    if args.cmd == "fetch":
+        from nya_agent.library.ingest import fetch_act
+
+        for code in args.acts:
+            path = fetch_act(code.upper(), args.force)
+            print(f"{code.upper():<5} {path} ({path.stat().st_size // 1024} KB)")
+        return
+    if args.cmd == "count":
+        from nya_agent.library.ingest import count_sections
+
+        ok = True
+        for code in args.acts:
+            r = count_sections(code.upper())
+            good = not r["missing"] and not r["extra"]
+            ok &= good
+            print(f"{r['act']:<5} {'OK  ' if good else 'DIFF'} {r['numbered']}/{r['expected']} numbered, "
+                  f"{r['sections']} total, {r['pages']} pages")
+            if r["missing"]:
+                print(f"      missing: {r['missing'][:40]}{' ...' if len(r['missing']) > 40 else ''}")
+            if r["extra"]:
+                print(f"      beyond the last section: {r['extra'][:20]}")
+            if r["lettered"]:
+                print(f"      lettered: {len(r['lettered'])} e.g. {r['lettered'][:8]}")
+        raise SystemExit(0 if ok else 1)
 
     engine = db.get_engine()
     if args.cmd == "setup":

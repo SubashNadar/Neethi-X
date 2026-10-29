@@ -18,9 +18,15 @@ from nya_agent.library.acts import ACTS
 from nya_agent.library.parser import SectionNodeParser, merge_pages
 
 DATA_DIR = Path(__file__).resolve().parents[3] / "data"
+# Official India Code PDFs (Ministry of Home Affairs uploads for the new codes). See data/SOURCES.md.
 SOURCE_URLS = {
-    # Filled from data/SOURCES.md once the official India Code links are confirmed.
+    "BNS": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+    "BNSS": "https://www.indiacode.nic.in/bitstream/123456789/20099/1/A202346.pdf",
+    "BSA": "https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf",
+    "IPC": "https://www.indiacode.nic.in/bitstream/123456789/4219/1/THE-INDIAN-PENAL-CODE-1860.pdf",
 }
+# Numbered sections in each act, for checking the parser on the real PDFs.
+EXPECTED_SECTIONS = {"BNS": 358, "BNSS": 531, "BSA": 170, "IPC": 511}
 
 
 def act_document(code: str, pages: list[Document], source_url: str) -> Document:
@@ -37,6 +43,39 @@ def act_document(code: str, pages: list[Document], source_url: str) -> Document:
     )
     doc.id_ = f"act:{code}"
     return doc
+
+
+def fetch_act(code: str, force: bool = False) -> Path:
+    """Download the official PDF for `code` into data/raw/ unless it is already there."""
+    import urllib.request
+
+    dest = DATA_DIR / "raw" / ACTS[code].file
+    if dest.exists() and not force:
+        return dest
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    req = urllib.request.Request(SOURCE_URLS[code], headers={"User-Agent": "Mozilla/5.0 (nya-agent)"})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        body = r.read()
+    if not body.startswith(b"%PDF"):
+        raise ValueError(f"{SOURCE_URLS[code]} did not return a PDF")
+    dest.write_bytes(body)
+    return dest
+
+
+def count_sections(code: str, pdf: Path | None = None) -> dict:
+    """Parse a PDF without embedding or a database and compare its sections with the expected count."""
+    pdf = pdf or DATA_DIR / "raw" / ACTS[code].file
+    pages = PDFReader().load_data(pdf)
+    nodes = SectionNodeParser().split_act(act_document(code, pages, SOURCE_URLS.get(code, "")))
+    found = {n.metadata["section"] for n in nodes}
+    numbered = {int("".join(c for c in s if c.isdigit())) for s in found}
+    expected = EXPECTED_SECTIONS[code]
+    return {
+        "act": code, "pages": len(pages), "sections": len(found), "numbered": len(numbered),
+        "expected": expected, "missing": sorted(set(range(1, expected + 1)) - numbered),
+        "extra": sorted(n for n in numbered if n > expected),
+        "lettered": sorted(s for s in found if not s.isdigit()),
+    }
 
 
 def section_rows(nodes: list[TextNode]) -> list[dict]:
