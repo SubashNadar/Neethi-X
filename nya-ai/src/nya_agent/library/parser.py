@@ -13,8 +13,12 @@ from typing import Any
 from llama_index.core.node_parser import NodeParser
 from llama_index.core.schema import BaseNode, Document, NodeRelationship, TextNode
 
+# A long heading wraps onto a second line ("22. Confession caused by ... in criminal\nproceeding.—"),
+# as long as that line does not start another numbered section.
 SECTION_START = re.compile(
-    r"^\s*(?P<num>\d{1,3}[A-Z]{0,2})\.\s+(?P<heading>[^\n—–]{2,220}?)\.?\s*(?:—|–|-{2}|\.-)\s*",
+    r"^\s*(?P<num>\d{1,3}[A-Z]{0,2})\.\s+"
+    r"(?P<heading>[^\n—–]{2,220}?(?:\n(?!\s*\d{1,3}[A-Z]{0,2}\.\s)[^\n—–]{1,220}?)?)"
+    r"\.?\s*(?:—|–|-{2}|\.-)\s*",
     re.MULTILINE,
 )
 CHAPTER = re.compile(r"^\s*CHAPTER\s+(?P<num>[IVXLC]+[A-Z]?)\s*\n\s*(?P<title>[^\n]{3,200})", re.MULTILINE)
@@ -64,7 +68,7 @@ class SectionNodeParser(NodeParser):
             # A chapter heading printed between two sections belongs to the next one.
             end = min([end] + [pos for pos, _, _ in chapters if m.start() < pos < end])
             body = re.sub(r"[ \t]+", " ", text[m.start() : end]).strip()
-            num, heading = m.group("num"), m.group("heading").strip()
+            num, heading = m.group("num"), " ".join(m.group("heading").split())
             chapter = next(((c, t) for pos, c, t in reversed(chapters) if pos < m.start()), (None, None))
             base = {
                 **meta,

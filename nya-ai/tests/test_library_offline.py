@@ -37,6 +37,20 @@ def test_keeps_explanations_and_illustrations_and_drops_footnotes():
     assert "CHAPTER II" not in by["2"].text  # chapter heading belongs to the next section
 
 
+def test_heading_wrapped_onto_a_second_line():
+    text = (
+        "21. Admissions.—An admission is relevant.\n"
+        "22. Confession caused by inducement, threat, coercion or promise, when irrelevant in criminal \n"
+        "proceeding.—A confession made by an accused person is irrelevant.\n"
+        "23. Next.—Text.\n"
+    )
+    nodes = SectionNodeParser().split_act(Document(text=text, metadata=META))
+    assert [n.metadata["section"] for n in nodes] == ["21", "22", "23"]
+    assert nodes[1].metadata["heading"] == (
+        "Confession caused by inducement, threat, coercion or promise, when irrelevant in criminal proceeding"
+    )
+
+
 def test_page_and_date_metadata():
     by = {n.metadata["section"]: n for n in _nodes()}
     assert by["1"].metadata["page"] == "1"
