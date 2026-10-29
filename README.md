@@ -15,7 +15,7 @@ information, not legal advice.
 | Web app (React, Vite, TypeScript, Tailwind) | `frontend/` | Chat, advocates, booking, payment, lawyer portal |
 | API (FastAPI, Python, uv) | `backend/` | Auth (OTP, JWT with logout), lawyers, bookings, Razorpay, messages |
 | Chat answers | `backend/src/nya_ai/chat_engine.py` | Keyword rule engine as a fallback |
-| Nya-AI agent (LangGraph + LlamaIndex + pgvector) | `nya-ai/` (planned) | Not built yet; will replace `chat_engine.get_answer` |
+| Nya-AI agent (LangGraph + LlamaIndex + pgvector + Langfuse) | `nya-ai/` | R0 law library built (ingest, hybrid search, golden check); the graph that replaces `chat_engine.get_answer` is R1 |
 
 ## Run it locally
 

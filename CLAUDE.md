@@ -30,8 +30,10 @@ Nya-AI is the only product.
   `nya_ai.db` is created and seeded on boot.
 - `frontend/` — Vite + React + TypeScript + Tailwind 3 (shadcn/ui pattern, lucide, motion, sonner).
   Run: `cd frontend && npm install && npm run dev`.
-- `nya-ai/` — planned home of the agent service (LangGraph + LlamaIndex + pgvector + Langfuse).
-  Neethi-era subagents were removed; build with Claude Code directly.
+- `nya-ai/` — agent service (uv package `nya_agent`). R0, the law library, is built: section
+  parser, LlamaIndex ingestion into pgvector, hybrid retrieval with act/date filters, SQL tables,
+  golden-set check, Langfuse tracing. `docker compose up -d` there starts pgvector (5433) and
+  Langfuse (3000). Run `uv run pytest` there too. See `nya-ai/README.md`.
 
 ## Conventions
 
@@ -44,6 +46,10 @@ Nya-AI is the only product.
 
 ## Log (newest first)
 
+- **2026-10-29** — Agent service R0 (law library) in `nya-ai/`. Tested on a synthetic fixture
+  against real pgvector and a running Langfuse; not yet run on the real acts because India Code is
+  blocked from cloud sessions and the Azure key lives only on the owner's machine. Golden check
+  currently FAILs as expected (nothing real ingested). Next: real PDFs + Azure, then R1 (graph).
 - **2026-10-29** — Consult plan (`/plan`) and call room (`/call/:bookingId`). "Ask an advocate" in
   chat opens the plan with the question as the facts; the plan is sent as `brief` with
   `POST /api/bookings` (stored in `bookings.brief_json`, added to old dev DBs on boot) and shown to

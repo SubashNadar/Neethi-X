@@ -1,0 +1,30 @@
+SYNTHETIC TEST TEXT. It copies the layout of an India Code bare act PDF, not its wording.
+
+ARRANGEMENT OF SECTIONS
+CHAPTER I
+PRELIMINARY
+1. Short title and commencement.
+2. Definitions.
+CHAPTER II
+OF SAMPLE OFFENCES
+3. Taking of property.
+3A. Snatching of property.
+4. Punishment for taking of property.
+
+THE SAMPLE CODE, 2023
+BE it enacted by Parliament as follows:—
+CHAPTER I
+PRELIMINARY
+1. Short title and commencement.—(1) This Code may be called the Sample Code, 2023.
+(2) It shall come into force on such date as notified.
+2. Definitions.—In this Code, unless the context otherwise requires, "property" means any movable thing.
+Explanation.—A thing attached to the earth is not movable until severed.
+1. Subs. by Act 1 of 2024, s. 2, for certain words.
+CHAPTER II
+OF SAMPLE OFFENCES
+3. Taking of property.—Whoever moves property out of another person's possession without consent is said to commit taking.
+Illustration.
+A moves a pen from B's desk without consent. A commits taking.
+3A. Snatching of property.—Taking is snatching if the offender suddenly or quickly seizes the property.
+4. Punishment for taking of property.—(1) Whoever commits taking shall be punished with imprisonment which may extend to three years.
+(2) Whoever commits taking a second time shall be punished with imprisonment which may extend to five years.

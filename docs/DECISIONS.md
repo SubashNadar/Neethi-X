@@ -3,6 +3,17 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Agent service R0: law library (2026-10-29)
+
+- One Document per act; the docstore uses `UPSERTS`, so re-ingesting one act never touches another
+  (`UPSERTS_AND_DELETE` would delete every act not in the run).
+- Dates are ISO strings in metadata, with `9999-12-31` for "still in force", so the as-of filter is
+  two string comparisons. The IPC applies up to 30 June 2024; BNS, BNSS and BSA from 1 July 2024.
+- Langfuse is self-hosted (v3) in `nya-ai/docker-compose.yml`, sharing the pgvector Postgres server
+  in its own `langfuse` database. Tracing switches off when no Langfuse keys are set.
+- `section_map` starts with ten rows the app and golden set use, all `verified=false` until checked
+  against the MHA comparison table. `offence_class` stays empty until a public source is loaded.
+
 ## Consult plan and call room (2026-10-29)
 
 Users can write a short brief (topic, facts, questions, goals) before booking. It is optional, stays

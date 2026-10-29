@@ -1,0 +1,12 @@
+old_act,old_section,new_act,new_section,note,verified
+# Starter rows used by the app and the golden queries. verified=false until each row is checked against the official MHA comparison table.
+IPC,302,BNS,103(1),murder,false
+IPC,378,BNS,303(1),theft (definition),false
+IPC,379,BNS,303(2),theft (punishment),false
+IPC,420,BNS,318(4),cheating and dishonestly inducing delivery of property,false
+IPC,498A,BNS,85,cruelty by husband or relatives,false
+IPC,498A,BNS,86,cruelty defined,false
+CrPC,154,BNSS,173,information in cognizable cases (FIR),false
+IEA,65B,BSA,63,admissibility of electronic records,false
+,,BNS,111,new offence: organised crime,false
+,,BNS,103(2),new provision: murder by a group on listed grounds (mob lynching),false
