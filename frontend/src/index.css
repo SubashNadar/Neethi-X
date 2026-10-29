@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 * {
@@ -18,8 +18,12 @@ body,
 
 body {
   margin: 0;
-  background: #f3f5f9;
-  color: #1b2430;
+  background-color: #0a1424;
+  background-image: linear-gradient(rgba(217, 181, 110, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 181, 110, 0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  color: #f3f5f9;
   font-family: 'Figtree', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,7 +35,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'Fraunces', Georgia, serif;
 }
 
 ::-webkit-scrollbar {
@@ -40,7 +44,7 @@ h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d5dce6;
+  background: #2b3f5c;
   border-radius: 8px;
 }
 
@@ -51,7 +55,7 @@ h6 {
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid #a9c2e0;
+  outline: 2px solid #d9b56e;
   outline-offset: 1px;
 }
 

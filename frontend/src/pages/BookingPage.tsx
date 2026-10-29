@@ -101,7 +101,7 @@ export default function BookingPage() {
                 key={d}
                 onClick={() => setSelDay(i)}
                 className={`rounded-2xl border px-4 py-2.5 text-[13px] font-semibold ${
-                  selDay === i ? 'border-primary bg-primary text-white' : 'border-line bg-surface text-body3'
+                  selDay === i ? 'border-primary bg-primary text-primary-foreground' : 'border-line bg-surface text-body3'
                 }`}
               >
                 {d}
@@ -116,7 +116,7 @@ export default function BookingPage() {
                 key={s}
                 onClick={() => setSelSlot(i)}
                 className={`rounded-2xl border px-4 py-2.5 text-[13px] font-semibold ${
-                  selSlot === i ? 'border-primary bg-primary text-white' : 'border-line bg-surface text-body3'
+                  selSlot === i ? 'border-primary bg-primary text-primary-foreground' : 'border-line bg-surface text-body3'
                 }`}
               >
                 {s}
@@ -131,7 +131,7 @@ export default function BookingPage() {
                 key={t}
                 onClick={() => setConsultType(t)}
                 className={`rounded-2xl border px-5 py-2.5 text-[13px] font-semibold ${
-                  consultType === t ? 'border-primary bg-primary text-white' : 'border-line bg-surface text-body3'
+                  consultType === t ? 'border-primary bg-primary text-primary-foreground' : 'border-line bg-surface text-body3'
                 }`}
               >
                 {t} call
@@ -177,7 +177,7 @@ export default function BookingPage() {
           <button
             onClick={proceedToPay}
             disabled={!canPay || booking}
-            className={`mt-[18px] w-full rounded-full py-3.5 text-[15px] font-bold text-white transition-colors ${
+            className={`mt-[18px] w-full rounded-full py-3.5 text-[15px] font-bold text-primary-foreground transition-colors ${
               canPay ? 'cursor-pointer bg-primary hover:bg-primary-hover' : 'cursor-not-allowed bg-faint'
             }`}
           >

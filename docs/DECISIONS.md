@@ -3,6 +3,15 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Orbit theme in the app (2026-10-29)
+
+The whole app uses the Orbit dark theme through the Tailwind tokens: navy background with a brass
+grid, brass primary buttons with dark text, Fraunces headings, JetBrains Mono for metadata. The chat
+screen follows the Orbit layout: a reasoning-trace panel, ¶-numbered answers with numbered sources,
+and a temporal-jurisdiction panel that works out IPC or BNS from the incident date (BNS from
+1 July 2024). Until the agent is built, the trace shows only real steps of the keyword engine and a
+"basic mode" note, and the IPC to BNS concordance shows four examples, labelled as such.
+
 ## Rebrand to Nya-AI (2026-10-29)
 
 The app is now Nya-AI only. The Python package is `nya_ai`, the dev database is `nya_ai.db` and the

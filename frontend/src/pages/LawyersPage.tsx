@@ -42,7 +42,7 @@ export default function LawyersPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`rounded-full px-4 py-2 text-[13px] font-semibold transition-colors ${
-              filter === f ? 'bg-navy-900 text-white shadow-sm' : 'text-body2 hover:bg-bg hover:text-ink'
+              filter === f ? 'bg-primary text-primary-foreground shadow-sm' : 'text-body2 hover:bg-bg hover:text-ink'
             }`}
           >
             {f}
@@ -127,7 +127,7 @@ export default function LawyersPage() {
                 </div>
                 <button
                   onClick={() => navigate(`/booking/${lw.id}`)}
-                  className="rounded-full bg-gradient-to-b from-navy-600 to-navy-800 px-6 py-2.5 text-sm font-bold text-white shadow-card transition-all hover:shadow-lift"
+                  className="rounded-full bg-primary hover:bg-primary-hover px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift"
                 >
                   Book
                 </button>

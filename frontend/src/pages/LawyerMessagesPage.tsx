@@ -109,7 +109,7 @@ export default function LawyerMessagesPage() {
               <div className="text-[15px] font-bold">{selected.client_name}</div>
               <div className="text-xs text-muted">{selected.topic} · paid consult · ₹350 to you</div>
             </div>
-            <button className="whitespace-nowrap rounded-full bg-success-text px-[18px] py-2.5 text-[13px] font-bold text-white">
+            <button className="whitespace-nowrap rounded-full bg-success-text px-[18px] py-2.5 text-[13px] font-bold text-primary-foreground">
               Start video call
             </button>
           </div>

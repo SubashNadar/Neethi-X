@@ -6,7 +6,7 @@ export default function LawyerProfilePage() {
 
       <div className="mt-5 max-w-[640px] rounded-[22px] border border-line bg-surface p-[26px]">
         <div className="flex items-center gap-[18px]">
-          <div className="flex h-[68px] w-[68px] flex-none items-center justify-center rounded-full bg-primary text-[22px] font-bold text-white">
+          <div className="flex h-[68px] w-[68px] flex-none items-center justify-center rounded-full bg-primary text-[22px] font-bold text-primary-foreground">
             MK
           </div>
           <div className="flex-1">

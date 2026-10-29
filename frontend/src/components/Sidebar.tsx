@@ -56,15 +56,11 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
   const isActive = (item: NavItem) => item.match.some((m) => location.pathname.startsWith(m))
 
   return (
-    <aside className="relative hidden w-[264px] flex-none flex-col overflow-hidden bg-navy-900 p-4 text-white md:flex">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-navy-600/40 blur-3xl"
-      />
+    <aside className="relative hidden w-[248px] flex-none flex-col overflow-hidden border-r border-line bg-navy-950/85 p-4 text-white backdrop-blur md:flex">
       <div className="relative px-1.5 pb-6 pt-1.5">
         <BrandLockup inverted />
       </div>
-      <div className="relative px-3 pb-2 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white/35">
+      <div className="relative px-3 pb-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-brass-light/80">
         {user?.role === 'lawyer' ? 'Practice' : 'Workspace'}
       </div>
       <nav className="relative flex flex-col gap-1">
@@ -81,7 +77,7 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
               {active && (
                 <motion.span
                   layoutId="sidebar-active"
-                  className="absolute inset-0 rounded-xl bg-white/10 ring-1 ring-inset ring-white/10"
+                  className="absolute inset-0 rounded-xl bg-brass-light/10 ring-1 ring-inset ring-brass-light/25"
                   transition={{ type: 'spring', stiffness: 500, damping: 40 }}
                 >
                   <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-brass-light" />

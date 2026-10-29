@@ -124,7 +124,7 @@ export default function LoginPage() {
           <div className="mt-3 ml-auto w-fit rounded-2xl rounded-tr-md bg-white/10 px-3.5 py-2 text-[13px]">
             How do I file an FIR?
           </div>
-          <div className="mt-2 w-fit max-w-[90%] rounded-2xl rounded-tl-md bg-white px-3.5 py-2.5 text-[13px] leading-relaxed text-ink">
+          <div className="mt-2 w-fit max-w-[90%] rounded-2xl rounded-tl-md bg-brass-soft px-3.5 py-2.5 text-[13px] leading-relaxed text-navy-900">
             Filing an FIR is free, and the police are duty-bound to register it.
           </div>
         </div>
@@ -132,7 +132,7 @@ export default function LoginPage() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 flex-none items-center px-6 lg:hidden">
-          <BrandLockup />
+          <BrandLockup inverted />
         </header>
         <div className="flex flex-1 items-center justify-center p-6">
           <motion.div
@@ -151,7 +151,7 @@ export default function LoginPage() {
                 <button
                   onClick={() => setRole('user')}
                   className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'user' ? 'bg-navy-900 text-white shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
+                    role === 'user' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
                   }`}
                 >
                   I need legal help
@@ -159,7 +159,7 @@ export default function LoginPage() {
                 <button
                   onClick={() => setRole('lawyer')}
                   className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'lawyer' ? 'bg-navy-900 text-white shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
+                    role === 'lawyer' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
                   }`}
                 >
                   I'm a lawyer
@@ -196,7 +196,7 @@ export default function LoginPage() {
                   <button
                     onClick={handleVerifyOtp}
                     disabled={loading}
-                    className="mt-3.5 w-full rounded-full bg-gradient-to-b from-navy-600 to-navy-800 py-3.5 text-[15px] font-bold text-white shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                    className="mt-3.5 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                   >
                     {loading ? 'Verifying…' : 'Continue'}
                   </button>
@@ -205,7 +205,7 @@ export default function LoginPage() {
                 <button
                   onClick={handleSendOtp}
                   disabled={loading}
-                  className="mt-4 w-full rounded-full bg-gradient-to-b from-navy-600 to-navy-800 py-3.5 text-[15px] font-bold text-white shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                  className="mt-4 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                 >
                   {loading ? 'Sending…' : 'Get OTP'}
                 </button>

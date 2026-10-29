@@ -112,7 +112,7 @@ export default function DashboardPage() {
           </div>
           <button
             onClick={() => navigate('/chat')}
-            className="whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-white transition-colors hover:bg-primary-hover"
+            className="whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Ask Nya-AI
           </button>
