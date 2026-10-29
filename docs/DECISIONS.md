@@ -3,6 +3,15 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Public information pages (2026-10-29)
+
+Legal, About, Contact and Help are public routes, so a signed-out visitor can read the disclaimer and
+privacy notice before signing in. The policy text is a draft and says so; an advocate must review it
+before launch. Contact messages are stored by `POST /api/support` with no login and no automated
+reply. Rights requests (data summary, deletion) go through the Contact form with the topic "Privacy
+or data" until self-serve buttons exist. The About page states no library numbers, because the
+indexed library does not exist yet.
+
 ## Orbit theme in the app (2026-10-29)
 
 The whole app uses the Orbit dark theme through the Tailwind tokens: navy background with a brass

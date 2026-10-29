@@ -44,10 +44,14 @@ Nya-AI is the only product.
 
 ## Log (newest first)
 
+- **2026-10-29** — Public Legal, About, Contact and Help pages (`/legal`, `/about`, `/contact`,
+  `/help`, shared `InfoLayout`, no sign-in needed), linked from sign-in, sidebar and Account. Contact
+  form posts to `POST /api/support` (`SupportMessage`, refs `SUP-YYYYMMDD-###`). Placeholders such
+  as [SUPPORT EMAIL] and [OFFICER NAME] still need real values. Orbit screens not yet in the app:
+  law library admin, consult plan, live call, basics states board.
 - **2026-10-29** — Orbit theme applied across the app (tokens in `tailwind.config.js`, grid in
   `index.css`); chat rebuilt to the Orbit layout (trace panel, cited ¶ answer, temporal panel).
-  Orbit screens not yet in the app: law library admin, consult plan, live call, legal/about/contact/
-  help pages, basics states board.
+  Orbit screens not yet in the app: law library admin, consult plan, live call, basics states board.
 - **2026-10-29** — Rebranded to Nya-AI: package `neethi` → `nya_ai`, Orbit logo and favicon,
   JetBrains Mono added, all user-facing copy renamed. Removed the old design export, UI reference,
   build guardrails, open-questions log, three old subagents, pitch deck, roadmap and Vite template

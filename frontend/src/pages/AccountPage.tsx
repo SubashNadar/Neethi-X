@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 export default function AccountPage() {
@@ -20,6 +21,20 @@ export default function AccountPage() {
           {user?.phone && <div className="mt-0.5 text-[13px] text-muted">+91 {user.phone}</div>}
         </div>
       </div>
+
+      <nav aria-label="Information pages" className="mt-5 max-w-[480px] divide-y divide-line overflow-hidden rounded-[20px] border border-line bg-surface">
+        {[
+          ['/help', 'Help and quick support'],
+          ['/contact', 'Contact us'],
+          ['/legal', 'Disclaimer, privacy and terms'],
+          ['/about', 'About Nya-AI'],
+        ].map(([to, label]) => (
+          <Link key={to} to={to} className="flex items-center justify-between px-5 py-3.5 text-sm font-semibold text-ink hover:bg-soft">
+            {label}
+            <span aria-hidden className="text-primary">›</span>
+          </Link>
+        ))}
+      </nav>
 
       <button
         onClick={() => logout()}

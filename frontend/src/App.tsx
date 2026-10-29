@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from './components/AppShell'
+import { InfoLayout } from './components/InfoLayout'
 import { useAuth } from './context/AuthContext'
 import LoginPage from './pages/LoginPage'
 import ChatPage from './pages/ChatPage'
@@ -14,6 +15,10 @@ import AccountPage from './pages/AccountPage'
 import LawyerPortalPage from './pages/LawyerPortalPage'
 import LawyerMessagesPage from './pages/LawyerMessagesPage'
 import LawyerProfilePage from './pages/LawyerProfilePage'
+import LegalPage from './pages/LegalPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import HelpPage from './pages/HelpPage'
 
 function homeFor(role: 'user' | 'lawyer' | undefined) {
   return role === 'lawyer' ? '/portal' : '/chat'
@@ -58,6 +63,13 @@ export default function App() {
           </RedirectIfAuthed>
         }
       />
+
+      <Route element={<InfoLayout />}>
+        <Route path="/legal" element={<LegalPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/help" element={<HelpPage />} />
+      </Route>
 
       <Route
         element={

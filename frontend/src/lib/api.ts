@@ -11,6 +11,8 @@ import type {
   PaymentOrder,
   RazorpayResult,
   Role,
+  SupportIn,
+  SupportOut,
   User,
   UserDashboard,
 } from '../types'
@@ -226,6 +228,13 @@ export async function replyToThread(
 
 export async function markThreadRead(id: string): Promise<MessageThread> {
   const { data } = await client.patch(`/messages/threads/${id}/read`)
+  return data
+}
+
+// ---------- Support ----------
+
+export async function sendSupportMessage(payload: SupportIn): Promise<SupportOut> {
+  const { data } = await client.post('/support', payload)
   return data
 }
 

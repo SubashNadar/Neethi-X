@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   CalendarCheck,
   Crown,
@@ -109,6 +109,12 @@ export function Sidebar({ unreadThreads }: { unreadThreads: number }) {
           <div className="relative mt-3 text-sm font-bold text-brass-light">₹299/month</div>
         </div>
       )}
+      <nav aria-label="Information pages" className="relative mb-3 flex flex-wrap gap-x-3 gap-y-1 px-1 font-mono text-[10.5px] tracking-[0.1em] text-white/45">
+        <Link to="/help" className="hover:text-brass-light">HELP</Link>
+        <Link to="/contact" className="hover:text-brass-light">CONTACT</Link>
+        <Link to="/legal" className="hover:text-brass-light">LEGAL</Link>
+        <Link to="/about" className="hover:text-brass-light">ABOUT</Link>
+      </nav>
       <div className="relative flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5">
         <div className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-full bg-gradient-to-br from-brass-light to-brass-dark text-[13px] font-bold text-navy-950">
           {user?.initials ?? '?'}

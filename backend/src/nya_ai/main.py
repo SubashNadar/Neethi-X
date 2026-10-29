@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from nya_ai.config import get_settings
 from nya_ai.database import Base, SessionLocal, engine
 from nya_ai.models import RevokedToken, utcnow
-from nya_ai.routers import auth, bookings, chat, dashboard, lawyers, messages, payments
+from nya_ai.routers import auth, bookings, chat, dashboard, lawyers, messages, payments, support
 from nya_ai.seed import seed_if_empty
 
 settings = get_settings()
@@ -46,6 +46,7 @@ app.include_router(bookings.router, prefix="/api")
 app.include_router(payments.router, prefix="/api")
 app.include_router(messages.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
+app.include_router(support.router, prefix="/api")
 
 
 @app.get("/api/health")

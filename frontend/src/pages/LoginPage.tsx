@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Clock3, IndianRupee, type LucideIcon, Scale, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
 import { BrandLockup } from '../components/Logo'
@@ -226,8 +226,22 @@ export default function LoginPage() {
                 {guestLabel}
               </button>
             <div className="mt-5 text-[11.5px] leading-relaxed text-faint">
-              By continuing you agree to our Terms. Nya-AI gives legal information, not legal advice.
+              By continuing you agree to our{' '}
+              <Link to="/legal#terms" className="text-primary hover:underline">
+                Terms
+              </Link>{' '}
+              and{' '}
+              <Link to="/legal#privacy" className="text-primary hover:underline">
+                Privacy notice
+              </Link>
+              . Nya-AI gives legal information, not legal advice.
             </div>
+            <nav aria-label="Information pages" className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] tracking-[0.1em] text-muted">
+              <Link to="/about" className="hover:text-primary">ABOUT</Link>
+              <Link to="/contact" className="hover:text-primary">CONTACT</Link>
+              <Link to="/help" className="hover:text-primary">HELP</Link>
+              <Link to="/legal" className="hover:text-primary">LEGAL</Link>
+            </nav>
           </motion.div>
         </div>
       </div>

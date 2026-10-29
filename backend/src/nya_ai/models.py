@@ -187,3 +187,17 @@ class RevokedToken(Base):
     user_id: Mapped[str] = mapped_column(String(32), index=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
     revoked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class SupportMessage(Base):
+    """A message sent from the public Contact page. Read by the team; no reply is automated."""
+
+    __tablename__ = "support_messages"
+
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=gen_id)
+    ref: Mapped[str] = mapped_column(String(20), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(80))
+    contact: Mapped[str] = mapped_column(String(120))  # email or phone, as typed
+    topic: Mapped[str] = mapped_column(String(20))
+    text: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

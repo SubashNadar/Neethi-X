@@ -119,3 +119,17 @@ export interface MessageThread {
 export interface ApiErrorShape {
   detail?: string | Record<string, unknown>
 }
+
+export type SupportTopic = 'booking' | 'answer' | 'privacy' | 'advocate' | 'other'
+
+export interface SupportIn {
+  name: string
+  contact: string
+  topic: SupportTopic
+  text: string
+}
+
+export interface SupportOut {
+  ref: string
+  created_at: string
+}
