@@ -3,13 +3,22 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Backend layout (2026-10-30)
+
+All Python is one uv project in `backend/` with one package, `app`, laid out by layer: `api/`
+(routers and schemas), `core/` (settings, security, Langfuse), `db/` (app database), `services/`,
+`agents/` (LangGraph, R1), `rag/` (law library) and `evals/`. One `.env` holds the API and agent
+settings; the law library's Postgres URL is `VECTOR_DATABASE_URL` so it does not clash with the
+app's `DATABASE_URL`. This replaces the two-package workspace (`backend/api`, `backend/agent`) of
+earlier the same day.
+
 ## Agent service R0: law library (2026-10-29)
 
 - One Document per act; the docstore uses `UPSERTS`, so re-ingesting one act never touches another
   (`UPSERTS_AND_DELETE` would delete every act not in the run).
 - Dates are ISO strings in metadata, with `9999-12-31` for "still in force", so the as-of filter is
   two string comparisons. The IPC applies up to 30 June 2024; BNS, BNSS and BSA from 1 July 2024.
-- Langfuse is self-hosted (v3) in `backend/agent/docker-compose.yml`, sharing the pgvector Postgres server
+- Langfuse is self-hosted (v3) in `backend/docker-compose.yml`, sharing the pgvector Postgres server
   in its own `langfuse` database. Tracing switches off when no Langfuse keys are set.
 - `section_map` starts with ten rows the app and golden set use, all `verified=false` until checked
   against the MHA comparison table. `offence_class` stays empty until a public source is loaded.

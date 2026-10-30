@@ -19,7 +19,7 @@ Nya-AI is the only product.
    library, Langfuse observability, per-agent SLOs).
 3. **Capstone design:** SubashNadar/legal-docs-platform `docs/NYA-AI.md` and
    `evals/GOLDEN-QUERIES.md`.
-4. **API contract:** `backend/api/src/nya_ai/schemas.py` + `routers/`, mirrored by
+4. **API contract:** `backend/app/api/schemas.py` + `routers/`, mirrored by
    `frontend/src/types.ts` + `lib/api.ts`. If they disagree, that is a bug.
 5. **Decisions:** `docs/DECISIONS.md`.
 6. **SLOs:** `docs/SLOS.md` (definitions, targets, guardrails, how they are tested) and
@@ -27,30 +27,34 @@ Nya-AI is the only product.
 
 ## Where the code lives
 
-- `backend/` — one uv workspace (`backend/pyproject.toml`, one `uv.lock`, one `.venv`) holding all
-  Python. See `backend/README.md`.
-  - `backend/api/` — FastAPI, package `nya_ai`. Run:
-    `cd backend/api && uv sync && uv run uvicorn nya_ai.main:app --reload --port 8000`. SQLite dev DB
-    `nya_ai.db` is created and seeded on boot. Docker image builds from `backend/`:
-    `docker build -f api/Dockerfile .`
-  - `backend/agent/` — agent service (package `nya_agent`). R0, the law library, is built: section
-    parser, LlamaIndex ingestion into pgvector, hybrid retrieval with act/date filters, SQL tables,
-    golden-set check, Langfuse tracing. `docker compose up -d` there starts pgvector (5433) and
-    Langfuse (3000). PDFs go in `backend/agent/data/raw/` (gitignored). See `backend/agent/README.md`.
+- `backend/` — one uv project, one package `app` (`backend/pyproject.toml`, one `uv.lock`, one
+  `.venv`, one `.env`). See `backend/README.md`. Run: `cd backend && uv sync && uv run uvicorn
+  app.main:app --reload --port 8000`. SQLite dev DB `nya_ai.db` is created and seeded on boot. Docker:
+  `cd backend && docker build -t nya-ai-api .`.
+  - `app/api/` routers + schemas, `app/core/` settings, security, Langfuse, `app/db/` models and seed,
+    `app/services/` chat rule engine.
+  - `app/rag/` — law library (R0 built): section parser, LlamaIndex ingestion into pgvector, hybrid
+    retrieval with act/date filters, SQL tables. CLI `uv run nya-agent ...` (`app/cli.py`).
+    `docker compose up -d` in `backend/` starts pgvector (5433) and Langfuse (3000). PDFs go in
+    `backend/data/raw/` (gitignored).
+  - `app/agents/` — LangGraph graph (R1, not started). `app/evals/` — golden check; Ragas next.
 - `frontend/` — Vite + React + TypeScript + Tailwind 3 (shadcn/ui pattern, lucide, motion, sonner).
   Run: `cd frontend && npm install && npm run dev`.
 
 ## Conventions
 
 - **uv only** for Python.
-- Push straight to `main`; run `npm run build` and `uv run pytest` (in `backend/api` and
-  `backend/agent`) first.
+- Push straight to `main`; run `npm run build` and `uv run pytest` (in `backend/`) first.
 - OTP login accepts any 4-digit code. Payments are real Razorpay (test keys), payouts manual.
 - Public legal sources only; never advice on a user's own case; escalate to an advocate.
 - Azure OpenAI (personal subscription): gpt-5.4-nano, gpt-5.4, text-embedding-3-large at 1536
   dimensions. Keys never committed.
 
 ## Log (newest first)
+
+- **2026-10-30** — Backend restructured into one package `app` by layer (api, core, db, services,
+  agents, rag, evals), tests in `backend/tests/{api,rag}`, one `.env` (agent Postgres URL renamed
+  `VECTOR_DATABASE_URL`). No more `nya_ai`/`nya_agent` packages or `backend/api`, `backend/agent`.
 
 - **2026-10-30** — SLO definitions and targets in `docs/SLOS.md` and the test sheet
   `evals/slo-test-sheet.xlsx`, following the evaluation rules: Ruff/pylint, input and output

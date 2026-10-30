@@ -1,6 +1,7 @@
 # Python (backend, uv-managed)
 backend/.venv/
-backend/agent/data/raw/
+backend/data/raw/
+backend/.env
 **/__pycache__/
 *.pyc
 backend/**/*.db

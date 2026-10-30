@@ -1,5 +1,53 @@
-# uv workspace for all Nya-AI Python code: one lock file, one virtual environment.
-#   api/    FastAPI app (package nya_ai)
-#   agent/  LangGraph agent and LlamaIndex law library (package nya_agent)
-[tool.uv.workspace]
-members = ["api", "agent"]
+# Nya-AI backend: the FastAPI app, the law library (RAG) and the LangGraph agents in one package, `app`.
+[project]
+name = "nya-ai-backend"
+version = "0.1.0"
+description = "Nya-AI backend: API, law library and legal agents for Indian law"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # API
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.16.2",
+    "sqlalchemy>=2.0.55",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-dotenv>=1.0.0",
+    "anthropic>=0.40.0",
+    "httpx>=0.27.0",
+    "razorpay>=1.4.0",
+    # Agents, law library and observability
+    "langfuse>=5.0.4",
+    "langgraph>=1.2.18",
+    "llama-index-core>=0.14.25",
+    "llama-index-embeddings-azure-openai>=0.6.1",
+    "llama-index-readers-file>=0.7.0",
+    "llama-index-storage-docstore-postgres>=0.6.0",
+    "llama-index-storage-kvstore-postgres>=0.4",
+    "llama-index-vector-stores-postgres>=0.9.0",
+    "psycopg2-binary>=2.9.13",
+    "psycopg[binary]>=3.3.6",
+    "pypdf>=6.21.4",
+]
+
+[project.scripts]
+nya-agent = "app.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

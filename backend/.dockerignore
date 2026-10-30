@@ -1,8 +1,9 @@
-**/.venv/
+.venv/
 **/__pycache__/
 *.pyc
-**/nya_ai.db
-**/tests/
+*.db
+tests/
+.pytest_cache/
 .ruff_cache/
-**/.env
-agent/data/raw/
+.env
+data/raw/

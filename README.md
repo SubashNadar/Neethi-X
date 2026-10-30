@@ -13,30 +13,30 @@ information, not legal advice.
 | Part | Folder | Status |
 | --- | --- | --- |
 | Web app (React, Vite, TypeScript, Tailwind) | `frontend/` | Chat, advocates, booking, payment, lawyer portal |
-| API (FastAPI, Python, uv) | `backend/api/` | Auth (OTP, JWT with logout), lawyers, bookings, Razorpay, messages |
-| Chat answers | `backend/api/src/nya_ai/chat_engine.py` | Keyword rule engine as a fallback |
-| Nya-AI agent (LangGraph + LlamaIndex + pgvector + Langfuse) | `backend/agent/` | R0 law library built (ingest, hybrid search, golden check); the graph that replaces `chat_engine.get_answer` is R1 |
+| API (FastAPI, Python, uv) | `backend/app/api/` | Auth (OTP, JWT with logout), lawyers, bookings, Razorpay, messages |
+| Chat answers | `backend/app/services/chat_engine.py` | Keyword rule engine as a fallback |
+| Law library (LlamaIndex + pgvector + Langfuse) | `backend/app/rag/` | R0 built: ingest, hybrid search, golden check |
+| Agents (LangGraph) | `backend/app/agents/` | R1, next: the graph that replaces `chat_engine.get_answer` |
 
 ## Run it locally
 
 ```bash
 # API on http://localhost:8000
-cd backend/api && uv sync && uv run uvicorn nya_ai.main:app --reload --port 8000
+cd backend && uv sync && uv run uvicorn app.main:app --reload --port 8000
 
 # Web app on http://localhost:5173
 cd frontend && npm install && npm run dev
 ```
 
 OTP login accepts any 4-digit code. The seeded advocate can sign in with phone `1234567890`.
-Razorpay test keys go in `backend/api/.env` (see `backend/api/.env.example`); without them the payment
+Razorpay test keys go in `backend/.env` (see `backend/.env.example`); without them the payment
 endpoints return `503` and everything else still works.
 
 ## Docs
 
 - [`docs/DECISIONS.md`](docs/DECISIONS.md): product decisions the code depends on.
-- [`backend/README.md`](backend/README.md): how the Python workspace is laid out.
-- [`backend/api/README.md`](backend/api/README.md): API layout, environment variables, tests.
-- [`backend/agent/README.md`](backend/agent/README.md): the agent service and law library.
+- [`docs/SLOS.md`](docs/SLOS.md): SLO definitions, targets and how they are tested.
+- [`backend/README.md`](backend/README.md): backend layout, API, law library and tests.
 - [`CLAUDE.md`](CLAUDE.md): working notes for Claude Code sessions.
 
 ## Rules
