@@ -22,6 +22,8 @@ Nya-AI is the only product.
 4. **API contract:** `backend/api/src/nya_ai/schemas.py` + `routers/`, mirrored by
    `frontend/src/types.ts` + `lib/api.ts`. If they disagree, that is a bug.
 5. **Decisions:** `docs/DECISIONS.md`.
+6. **SLOs:** `docs/SLOS.md` (definitions, targets, guardrails, how they are tested) and
+   `evals/slo-test-sheet.xlsx` (50 golden queries + 10 SLO probes, charts). Keep them in step.
 
 ## Where the code lives
 
@@ -49,6 +51,11 @@ Nya-AI is the only product.
   dimensions. Keys never committed.
 
 ## Log (newest first)
+
+- **2026-10-30** — SLO definitions and targets in `docs/SLOS.md` and the test sheet
+  `evals/slo-test-sheet.xlsx`, following the evaluation rules: Ruff/pylint, input and output
+  guardrails, every SLO defined, scores pushed to Langfuse, SLO test cases, Excel plots, Ragas. None
+  of it is in code yet.
 
 - **2026-10-30** — Repo layout: all Python moved under `backend/` as one uv workspace, the API to
   `backend/api/`, the agent (was `nya-ai/`) to `backend/agent/`; Python 3.12 for both. Section
