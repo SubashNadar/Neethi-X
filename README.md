@@ -8,6 +8,12 @@ information, not legal advice.
 - **Agent plan (LangGraph, LlamaIndex, Langfuse):** https://claude.ai/artifact/KtuTmzcwCe2aMQqWRtVN29
 - **Capstone design and golden queries:** [SubashNadar/legal-docs-platform](https://github.com/SubashNadar/legal-docs-platform), `docs/NYA-AI.md`
 
+## Architecture
+
+![Nya-AI system architecture](docs/diagrams/architecture.png)
+
+How a question is answered: [docs/diagrams/workflow.png](docs/diagrams/workflow.png) (SVG sources beside them).
+
 ## What runs today
 
 | Part | Folder | Status |
