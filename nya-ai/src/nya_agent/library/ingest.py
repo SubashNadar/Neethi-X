@@ -20,9 +20,9 @@ from nya_agent.library.parser import SectionNodeParser, merge_pages
 DATA_DIR = Path(__file__).resolve().parents[3] / "data"
 # Official India Code PDFs (Ministry of Home Affairs uploads for the new codes). See data/SOURCES.md.
 SOURCE_URLS = {
-    "BNS": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
-    "BNSS": "https://www.indiacode.nic.in/bitstream/123456789/20099/1/A202346.pdf",
-    "BSA": "https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf",
+    "BNS": "https://indiacode.gov.in/server/api/core/bitstreams/8007a80e-259b-429d-9ca4-1a2f474b5000/content",
+    "BNSS": "https://indiacode.gov.in/server/api/core/bitstreams/73f93470-5f6a-4f0f-bc23-1309e32b9554/content",
+    "BSA": "https://indiacode.gov.in/server/api/core/bitstreams/fa0f7526-d871-41f2-a644-2a42952211f5/content",
     "IPC": "https://www.indiacode.nic.in/bitstream/123456789/4219/1/THE-INDIAN-PENAL-CODE-1860.pdf",
 }
 # Numbered sections in each act, for checking the parser on the real PDFs.

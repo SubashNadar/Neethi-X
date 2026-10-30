@@ -13,14 +13,20 @@ from typing import Any
 from llama_index.core.node_parser import NodeParser
 from llama_index.core.schema import BaseNode, Document, NodeRelationship, TextNode
 
-# A long heading wraps onto a second line ("22. Confession caused by ... in criminal\nproceeding.—"),
-# as long as that line does not start another numbered section.
+# An amendment marker may come first ("1*[34. Acts done ..."), and the dash may follow the number
+# directly ("255.—Public servant ..."). A long heading wraps onto up to two more lines, across a
+# page number if a page breaks inside it ("69. Termination ... part\n112\n\nof fine.—"), as long
+# as no line starts another numbered section or a sub-heading such as "B.—Imprisonment".
+_PREFIX = r"^\s*(?:\d{1,2}\s*\*\s*)?\[?\s*(?P<num>\d{1,3}[A-Z]{0,2})\."
+_WRAP = r"(?:\n[ \t]*\d{1,4}[ \t]*)?(?:\n[ \t]*)*\n(?!\s*(?:\d{1,2}\s*\*\s*)?\[?\s*\d{1,3}[A-Z]{0,2}\.(?:\s|[—–]))(?!\s*[A-Z]{1,3}\.\s*[—–])[^\n—–]{1,220}?"
 SECTION_START = re.compile(
-    r"^\s*(?P<num>\d{1,3}[A-Z]{0,2})\.\s+"
-    r"(?P<heading>[^\n—–]{2,220}?(?:\n(?!\s*\d{1,3}[A-Z]{0,2}\.\s)[^\n—–]{1,220}?)?)"
+    _PREFIX + r"(?:\s+|\s*[—–]\s*)"
+    r"(?P<heading>[^\n—–]{2,220}?(?:" + _WRAP + r"){0,2})"
     r"\.?\s*(?:—|–|-{2}|\.-)\s*",
     re.MULTILINE,
 )
+# A repealed section keeps its number and bracketed heading: "13.\n[Definition of "Queen".] Rep. by ...".
+REPEALED = re.compile(_PREFIX + r"\s*\[(?P<heading>[^\]]{2,300}?)\.?\]\s*Rep\.", re.MULTILINE)
 CHAPTER = re.compile(r"^\s*CHAPTER\s+(?P<num>[IVXLC]+[A-Z]?)\s*\n\s*(?P<title>[^\n]{3,200})", re.MULTILINE)
 # Amendment footnotes India Code prints at the foot of a page, e.g. "1. Subs. by Act 5 of 2009".
 FOOTNOTE = re.compile(r"^\s*\d{1,2}\.\s+(?:Subs|Ins|Omitted|Rep|Added|The words|Cl|Sub-section)\b.*$", re.MULTILINE)
@@ -95,19 +101,37 @@ class SectionNodeParser(NodeParser):
     def _section_starts(self, text: str) -> list[re.Match[str]]:
         """Section heading matches in order, dropping false hits.
 
-        A real section number never goes backwards, so a match whose number is lower than the
-        previous one (a cross-reference such as "under 2. ..." at a line start, or a stray
-        table-of-contents line) is ignored.
+        Real section numbers rise through the act, so the longest run of matches whose numbers
+        keep rising is kept. A stray hit, such as an "Arrangement of Sections" entry or a
+        cross-reference at a line start, falls outside that run and is dropped without taking the
+        sections after it down too.
         """
+        found = sorted(
+            [*SECTION_START.finditer(text), *REPEALED.finditer(text)], key=lambda m: m.start()
+        )
+        keys = [section_key(m.group("num")) for m in found]
+        # Longest strictly increasing subsequence, O(n log n).
+        tails: list[int] = []
+        prev = [-1] * len(found)
+        for i, key in enumerate(keys):
+            lo, hi = 0, len(tails)
+            while lo < hi:
+                mid = (lo + hi) // 2
+                if keys[tails[mid]] < key:
+                    lo = mid + 1
+                else:
+                    hi = mid
+            prev[i] = tails[lo - 1] if lo else -1
+            if lo == len(tails):
+                tails.append(i)
+            else:
+                tails[lo] = i
         kept: list[re.Match[str]] = []
-        last = (0, "")
-        for m in SECTION_START.finditer(text):
-            key = section_key(m.group("num"))
-            if key <= last:
-                continue
-            kept.append(m)
-            last = key
-        return kept
+        i = tails[-1] if tails else -1
+        while i != -1:
+            kept.append(found[i])
+            i = prev[i]
+        return kept[::-1]
 
     def _split_long(self, body: str) -> list[str]:
         if approx_tokens(body) <= self.max_tokens:

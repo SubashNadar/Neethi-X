@@ -51,6 +51,36 @@ def test_heading_wrapped_onto_a_second_line():
     )
 
 
+def _sections(text: str) -> dict[str, str]:
+    return {n.metadata["section"]: n.metadata["heading"] for n in SectionNodeParser().split_act(Document(text=text, metadata=META))}
+
+
+def test_layouts_seen_in_the_real_ipc_and_bns():
+    text = (
+        "12. Public.—The word public.\n"
+        "13.\n[Definition of \"Queen\".] Rep. by the A. O. 1950.\n"
+        "1*[34. Acts done by several persons in furtherance of common intention.--When a criminal act.\n"
+        "69. Termination of imprisonment on payment of proportional part\n112\n\nof fine.—If, before the expiration.\n"
+        "255.—Public servant framing incorrect record.—Whoever, being a public servant.\n"
+    )
+    assert _sections(text) == {
+        "12": "Public",
+        "13": "Definition of \"Queen\"",
+        "34": "Acts done by several persons in furtherance of common intention",
+        "69": "Termination of imprisonment on payment of proportional part 112 of fine",
+        "255": "Public servant framing incorrect record",
+    }
+
+
+def test_a_stray_high_number_does_not_hide_the_sections_after_it():
+    # The BNSS list of sections has entries followed by a sub-heading line such as "B.—Imprisonment".
+    text = (
+        "455. Sentence of death.\n456. Commutation of sentence of death on pregnant woman.\nB.—Imprisonment\n"
+        "1. Short title.—(1) This Sanhita.\n2. Definitions.—In this Sanhita.\n3. Construction.—Words.\n"
+    )
+    assert list(_sections(text)) == ["1", "2", "3"]
+
+
 def test_page_and_date_metadata():
     by = {n.metadata["section"]: n for n in _nodes()}
     assert by["1"].metadata["page"] == "1"
