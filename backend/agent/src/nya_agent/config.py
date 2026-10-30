@@ -1,4 +1,4 @@
-"""Settings read from the environment or `nya-ai/.env`. Keys are never committed."""
+"""Settings read from the environment or `backend/agent/.env`. Keys are never committed."""
 
 from functools import lru_cache
 

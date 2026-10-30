@@ -25,7 +25,7 @@ https://claude.ai/artifact/KtuTmzcwCe2aMQqWRtVN29.
 ## Run it
 
 ```bash
-cd nya-ai
+cd backend/agent
 docker compose up -d          # Postgres + pgvector on 5433, Langfuse on http://localhost:3000
 cp .env.example .env          # add your Azure endpoint and key
 uv sync
@@ -33,7 +33,7 @@ uv run nya-agent setup        # tables, acts, section map
 uv run nya-agent fetch        # the four India Code PDFs into data/raw/ (see data/SOURCES.md)
 uv run nya-agent count        # parse them and check section counts; no database or Azure needed
 uv run nya-agent ingest       # BNS BNSS BSA IPC
-uv run nya-agent golden ../../legal-docs-platform/evals/GOLDEN-QUERIES.md
+uv run nya-agent golden ../../../legal-docs-platform/evals/GOLDEN-QUERIES.md
 uv run nya-agent search "My phone was stolen in March 2024" --as-of 2024-03-12
 uv run nya-agent status
 ```

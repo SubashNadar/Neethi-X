@@ -1,6 +1,6 @@
 """The acts R0 ingests, with the dates that decide which law applies on a given day.
 
-Source files are the official India Code PDFs. Put them in `nya-ai/data/raw/` under the file
+Source files are the official India Code PDFs. Put them in `backend/agent/data/raw/` under the file
 names below (see `data/SOURCES.md`); the raw PDFs are not committed.
 """
 

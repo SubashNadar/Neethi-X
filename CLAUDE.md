@@ -19,26 +19,30 @@ Nya-AI is the only product.
    library, Langfuse observability, per-agent SLOs).
 3. **Capstone design:** SubashNadar/legal-docs-platform `docs/NYA-AI.md` and
    `evals/GOLDEN-QUERIES.md`.
-4. **API contract:** `backend/src/nya_ai/schemas.py` + `routers/`, mirrored by
+4. **API contract:** `backend/api/src/nya_ai/schemas.py` + `routers/`, mirrored by
    `frontend/src/types.ts` + `lib/api.ts`. If they disagree, that is a bug.
 5. **Decisions:** `docs/DECISIONS.md`.
 
 ## Where the code lives
 
-- `backend/` — FastAPI, uv-managed, package `nya_ai`. Run:
-  `cd backend && uv sync && uv run uvicorn nya_ai.main:app --reload --port 8000`. SQLite dev DB
-  `nya_ai.db` is created and seeded on boot.
+- `backend/` — one uv workspace (`backend/pyproject.toml`, one `uv.lock`, one `.venv`) holding all
+  Python. See `backend/README.md`.
+  - `backend/api/` — FastAPI, package `nya_ai`. Run:
+    `cd backend/api && uv sync && uv run uvicorn nya_ai.main:app --reload --port 8000`. SQLite dev DB
+    `nya_ai.db` is created and seeded on boot. Docker image builds from `backend/`:
+    `docker build -f api/Dockerfile .`
+  - `backend/agent/` — agent service (package `nya_agent`). R0, the law library, is built: section
+    parser, LlamaIndex ingestion into pgvector, hybrid retrieval with act/date filters, SQL tables,
+    golden-set check, Langfuse tracing. `docker compose up -d` there starts pgvector (5433) and
+    Langfuse (3000). PDFs go in `backend/agent/data/raw/` (gitignored). See `backend/agent/README.md`.
 - `frontend/` — Vite + React + TypeScript + Tailwind 3 (shadcn/ui pattern, lucide, motion, sonner).
   Run: `cd frontend && npm install && npm run dev`.
-- `nya-ai/` — agent service (uv package `nya_agent`). R0, the law library, is built: section
-  parser, LlamaIndex ingestion into pgvector, hybrid retrieval with act/date filters, SQL tables,
-  golden-set check, Langfuse tracing. `docker compose up -d` there starts pgvector (5433) and
-  Langfuse (3000). Run `uv run pytest` there too. See `nya-ai/README.md`.
 
 ## Conventions
 
 - **uv only** for Python.
-- Push straight to `main`; run `npm run build` and `uv run pytest` first.
+- Push straight to `main`; run `npm run build` and `uv run pytest` (in `backend/api` and
+  `backend/agent`) first.
 - OTP login accepts any 4-digit code. Payments are real Razorpay (test keys), payouts manual.
 - Public legal sources only; never advice on a user's own case; escalate to an advocate.
 - Azure OpenAI (personal subscription): gpt-5.4-nano, gpt-5.4, text-embedding-3-large at 1536
@@ -46,6 +50,12 @@ Nya-AI is the only product.
 
 ## Log (newest first)
 
+- **2026-10-30** — Repo layout: all Python moved under `backend/` as one uv workspace, the API to
+  `backend/api/`, the agent (was `nya-ai/`) to `backend/agent/`; Python 3.12 for both. Section
+  parser checked on the real acts: BNS 358, BNSS 531 and BSA 170 all found. The IPC count hung on
+  runs of blank lines; fixed in 49f60d3, its count is not yet confirmed. BNS, BNSS and BSA now come
+  from indiacode.gov.in (the old indiacode.nic.in links return 504); the IPC still comes from
+  indiacode.nic.in.
 - **2026-10-29** — Agent service R0 (law library) in `nya-ai/`. Tested on a synthetic fixture
   against real pgvector and a running Langfuse; not yet run on the real acts because India Code is
   blocked from cloud sessions and the Azure key lives only on the owner's machine. Golden check

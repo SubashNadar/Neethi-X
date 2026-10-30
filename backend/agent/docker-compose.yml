@@ -51,7 +51,7 @@ services:
       LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT: http://minio:9000
       LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE: "true"
       LANGFUSE_S3_EVENT_UPLOAD_PREFIX: events/
-      # First start creates the project and its API keys, so nya-ai/.env can use them at once.
+      # First start creates the project and its API keys, so backend/agent/.env can use them at once.
       LANGFUSE_INIT_ORG_ID: nya
       LANGFUSE_INIT_ORG_NAME: Nya-AI
       LANGFUSE_INIT_PROJECT_ID: nya-ai

@@ -46,7 +46,7 @@ def embed_model() -> BaseEmbedding:
     s = get_settings()
     if not (s.AZURE_OPENAI_ENDPOINT and s.AZURE_OPENAI_API_KEY):
         raise RuntimeError(
-            "Azure OpenAI is not configured. Set AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY in nya-ai/.env."
+            "Azure OpenAI is not configured. Set AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY in backend/agent/.env."
         )
     from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 

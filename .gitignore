@@ -1,9 +1,9 @@
 # Python (backend, uv-managed)
 backend/.venv/
+backend/agent/data/raw/
 **/__pycache__/
 *.pyc
-backend/nya_ai.db
-backend/*.db
+backend/**/*.db
 .ruff_cache/
 
 # Node (frontend)

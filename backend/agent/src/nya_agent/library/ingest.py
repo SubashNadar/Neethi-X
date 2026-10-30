@@ -123,7 +123,7 @@ def _ingest(code, engine, embed, pdf, pages, source_url, vector_store, docstore,
         if pages is None:
             pdf = pdf or DATA_DIR / "raw" / ACTS[code].file
             if not pdf.exists():
-                raise FileNotFoundError(f"{pdf} not found. See nya-ai/data/SOURCES.md for where to get it.")
+                raise FileNotFoundError(f"{pdf} not found. See backend/agent/data/SOURCES.md for where to get it.")
             job.stage("fetch", f"local {pdf.name}")
             pages = PDFReader().load_data(pdf)
         source_url = source_url or SOURCE_URLS.get(code, "")
