@@ -17,11 +17,17 @@ from llama_index.core.schema import BaseNode, Document, NodeRelationship, TextNo
 # directly ("255.—Public servant ..."). A long heading wraps onto up to two more lines, across a
 # page number if a page breaks inside it ("69. Termination ... part\n112\n\nof fine.—"), as long
 # as no line starts another numbered section or a sub-heading such as "B.—Imprisonment".
-_PREFIX = r"^\s*(?:\d{1,2}\s*\*\s*)?\[?\s*(?P<num>\d{1,3}[A-Z]{0,2})\."
-_WRAP = r"(?:\n[ \t]*\d{1,4}[ \t]*)?(?:\n[ \t]*)*\n(?!\s*(?:\d{1,2}\s*\*\s*)?\[?\s*\d{1,3}[A-Z]{0,2}\.(?:\s|[—–]))(?!\s*[A-Z]{1,3}\.\s*[—–])[^\n—–]{1,220}?"
+_PREFIX = r"^[ \t]*(?:\d{1,2}[ \t]*\*[ \t]*)?\[?[ \t]*(?P<num>\d{1,3}[A-Z]{0,2})\."
+# Lookahead: the text here does not start another numbered section.
+_NOT_SECTION = r"(?!(?:\d{1,2}[ \t]*\*[ \t]*)?\[?[ \t]*\d{1,3}[A-Z]{0,2}\.(?:\s|[—–]))"
+_WRAP = (
+    r"(?:\n[ \t]*\d{1,4}[ \t]*)?(?:\n[ \t]*(?=\n))*\n[ \t]*"
+    + _NOT_SECTION + r"(?![A-Z]{1,3}\.[ \t]*[—–])"
+    r"[^\s—–][^\n—–]{0,219}?"
+)
 SECTION_START = re.compile(
-    _PREFIX + r"(?:\s+|\s*[—–]\s*)"
-    r"(?P<heading>[^\n—–]{2,220}?(?:" + _WRAP + r"){0,2})"
+    _PREFIX + r"(?:\s*+[—–]\s*+|\s++)"
+    + _NOT_SECTION + r"(?P<heading>[^\s—–][^\n—–]{1,219}?(?:" + _WRAP + r"){0,2})"
     r"\.?\s*(?:—|–|-{2}|\.-)\s*",
     re.MULTILINE,
 )

@@ -120,3 +120,13 @@ def test_parse_golden_table(tmp_path):
     )
     got = {(r.query, r.act, r.section) for r in parse_golden(md)}
     assert got == {(1, "BNS", "303"), (15, "BSA", "61"), (15, "BSA", "63"), (29, "BNS", "85"), (29, "BNS", "86"), (11, "CPA", "2")}
+
+
+def test_long_runs_of_blank_lines_parse_quickly():
+    # PDF text can hold hundreds of whitespace-only lines; an earlier pattern took minutes on them.
+    import time
+
+    text = "1. Title.—Text.\n2.\n" + "   \n" * 3000 + "3. Next.—Text.\n"
+    start = time.monotonic()
+    assert list(_sections(text)) == ["1", "3"]
+    assert time.monotonic() - start < 2
