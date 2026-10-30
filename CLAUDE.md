@@ -55,6 +55,7 @@ Nya-AI is the only product.
 - **2026-10-30** — Backend restructured into one package `app` by layer (api, core, db, services,
   agents, rag, evals), tests in `backend/tests/{api,rag}`, one `.env` (agent Postgres URL renamed
   `VECTOR_DATABASE_URL`). No more `nya_ai`/`nya_agent` packages or `backend/api`, `backend/agent`.
+  The GitHub repo is now SubashNadar/Nya-Ai (renamed from Neethi-X).
 
 - **2026-10-30** — SLO definitions and targets in `docs/SLOS.md` and the test sheet
   `evals/slo-test-sheet.xlsx`, following the evaluation rules: Ruff/pylint, input and output
