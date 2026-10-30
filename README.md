@@ -4,7 +4,7 @@ Nya-AI answers questions about Indian law from the law books themselves, cites t
 for every claim, and hands over to a verified advocate when a question needs real advice. Legal
 information, not legal advice.
 
-- **Design (Orbit UI, every screen on desktop and phone):** https://claude.ai/artifact/QYs5pGyrFcvACgYUWrUp1g
+- **Design (Orbit layouts, every screen on desktop and phone; colours are Sage & Clay, see docs/DESIGN.md):** https://claude.ai/artifact/QYs5pGyrFcvACgYUWrUp1g
 - **Agent plan (LangGraph, LlamaIndex, Langfuse):** https://claude.ai/artifact/KtuTmzcwCe2aMQqWRtVN29
 - **Capstone design and golden queries:** [SubashNadar/legal-docs-platform](https://github.com/SubashNadar/legal-docs-platform), `docs/NYA-AI.md`
 

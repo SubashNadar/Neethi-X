@@ -11,10 +11,11 @@ Nya-AI is the only product.
 
 ## Sources of truth
 
-1. **UI:** the Orbit design canvas, https://claude.ai/artifact/QYs5pGyrFcvACgYUWrUp1g. Every screen
-   has a desktop and a phone board, wired for Play mode. Style: navy `#0A1424` with a faint grid,
-   brass `#D9B56E`, cream `#F6EEDF`, Fraunces headings, Figtree body, JetBrains Mono for metadata
-   and citations.
+1. **UI:** layouts from the Orbit design canvas, https://claude.ai/artifact/QYs5pGyrFcvACgYUWrUp1g
+   (every screen has a desktop and a phone board, wired for Play mode). Colours and controls are
+   **Sage & Clay** since 2026-10-30, documented in `docs/DESIGN.md`: warm paper `#F6F4EE`
+   background, jade `#1E6B5C` actions, clay `#E0894A` highlights, Fraunces headings, Figtree body,
+   JetBrains Mono for metadata and citations. The canvas still shows the old navy theme; the app wins.
 2. **Agent plan:** https://claude.ai/artifact/KtuTmzcwCe2aMQqWRtVN29 (LangGraph graph, LlamaIndex
    library, Langfuse observability, per-agent SLOs).
 3. **Capstone design:** SubashNadar/legal-docs-platform `docs/NYA-AI.md` and
@@ -51,6 +52,11 @@ Nya-AI is the only product.
   dimensions. Keys never committed.
 
 ## Log (newest first)
+
+- **2026-10-30** — Theme changed from Orbit navy/brass to Sage & Clay (light, calmer) after the owner
+  found Orbit too aggressive. Signature controls: beam composer, tactile `.key` buttons, spotlight
+  cards, sliding pills, marker highlight, floating phone tab dock. Plan and sources in
+  `docs/DESIGN.md`. No dark mode yet.
 
 - **2026-10-30** — Backend restructured into one package `app` by layer (api, core, db, services,
   agents, rag, evals), tests in `backend/tests/{api,rag}`, one `.env` (agent Postgres URL renamed

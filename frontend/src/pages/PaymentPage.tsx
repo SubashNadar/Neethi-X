@@ -139,7 +139,7 @@ export default function PaymentPage() {
           {!paying ? (
             <button
               onClick={handlePay}
-              className="mt-4 w-full rounded-full bg-primary py-3.5 text-[15px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+              className="key mt-4 w-full rounded-full bg-primary py-3.5 text-[15px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
             >
               Pay ₹{booking.fee}
             </button>

@@ -8,6 +8,7 @@ import {
   Scale,
   UserRound,
 } from 'lucide-react'
+import { motion } from 'motion/react'
 import { useAuth } from '../context/AuthContext'
 
 interface Tab {
@@ -44,28 +45,35 @@ export function BottomTabBar() {
   const tabs = user?.role === 'lawyer' ? LAWYER_TABS : USER_TABS
 
   return (
-    <nav className="flex flex-none border-t border-line bg-surface px-1.5 pb-3.5 pt-2 md:hidden">
-      {tabs.map((tab) => {
-        const active = tab.match.some((m) => location.pathname === m || location.pathname.startsWith(m + '/'))
-        return (
-          <button
-            key={tab.label}
-            onClick={() => navigate(tab.path)}
-            className="flex flex-1 flex-col items-center gap-1 border-none bg-transparent py-1.5"
-          >
-            <span
-              className={`h-1 w-[26px] rounded-full ${active ? 'bg-primary' : 'bg-transparent'}`}
-            />
-            <tab.icon
-              className={`size-5 ${active ? 'text-primary' : 'text-faint'}`}
-              strokeWidth={active ? 2.4 : 2}
-            />
-            <span className={`text-[11px] ${active ? 'font-bold text-ink' : 'font-medium text-faint'}`}>
-              {tab.label}
-            </span>
-          </button>
-        )
-      })}
+    <nav className="flex-none px-3 pb-3 pt-1.5 md:hidden">
+      <div className="flex rounded-2xl border border-line bg-surface/95 p-1.5 shadow-lift backdrop-blur">
+        {tabs.map((tab) => {
+          const active = tab.match.some((m) => location.pathname === m || location.pathname.startsWith(m + '/'))
+          return (
+            <button
+              key={tab.label}
+              onClick={() => navigate(tab.path)}
+              className="relative flex flex-1 flex-col items-center gap-0.5 rounded-xl border-none bg-transparent py-1.5"
+            >
+              {active && (
+                <motion.span
+                  layoutId="tab-active"
+                  className="absolute inset-0 rounded-xl bg-primary-tint"
+                  transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                />
+              )}
+              <tab.icon
+                className={`relative size-5 ${active ? 'text-primary' : 'text-faint'}`}
+                strokeWidth={active ? 2.4 : 2}
+              />
+              <span className={`relative text-[11px] ${active ? 'font-bold text-ink' : 'font-medium text-faint'}`}>
+                {tab.label}
+              </span>
+              {active && <span className="absolute right-[calc(50%-16px)] top-1 size-1.5 rounded-full bg-brass" />}
+            </button>
+          )
+        })}
+      </div>
     </nav>
   )
 }

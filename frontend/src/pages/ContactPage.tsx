@@ -15,7 +15,7 @@ const TOPICS: { value: SupportTopic; label: string }[] = [
 ]
 
 const field =
-  'w-full rounded-lg border border-line bg-navy-950/60 px-3 py-2.5 text-[15px] text-ink placeholder:text-faint focus:border-primary focus:outline-none'
+  'w-full rounded-lg border border-line bg-bg px-3 py-2.5 text-[15px] text-ink placeholder:text-faint focus:border-primary focus:outline-none'
 
 export default function ContactPage() {
   const { user } = useAuth()
@@ -114,7 +114,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={sending}
-              className="self-start rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover disabled:opacity-60"
+              className="key self-start rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover disabled:opacity-60"
             >
               {sending ? 'Sending…' : 'Send message'}
             </button>

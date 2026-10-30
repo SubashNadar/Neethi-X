@@ -139,7 +139,7 @@ export default function HelpPage() {
           <p className="mt-1 text-[14px] text-body2">A person, not the AI, replies within one working day.</p>
           <Link
             to="/contact"
-            className="mt-3 inline-block rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground hover:bg-primary-hover"
+            className="key mt-3 inline-block rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground hover:bg-primary-hover"
           >
             Message support
           </Link>

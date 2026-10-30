@@ -39,7 +39,7 @@ export default function AboutPage() {
           when you need advice on your own case.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/login" className="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover">
+          <Link to="/login" className="key rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover">
             Ask a question
           </Link>
           <Link to="/contact" className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-ink hover:bg-soft">
@@ -63,7 +63,7 @@ export default function AboutPage() {
         <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {TEAM.map((t) => (
             <div key={t.initials} className="flex items-center gap-3 rounded-xl border border-line bg-surface/90 p-4">
-              <div className="flex size-11 flex-none items-center justify-center rounded-full bg-gradient-to-br from-brass-light to-brass-dark font-bold text-navy-950">
+              <div className="flex size-11 flex-none items-center justify-center rounded-full bg-gradient-to-br from-brass to-brass-dark font-bold text-white">
                 {t.initials}
               </div>
               <div>

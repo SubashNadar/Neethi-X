@@ -57,7 +57,7 @@ export default function SuccessPage() {
         <div className="mt-5 flex flex-wrap justify-center gap-2.5">
           <button
             onClick={() => navigate('/dashboard')}
-            className="rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+            className="key rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             View my consultations
           </button>

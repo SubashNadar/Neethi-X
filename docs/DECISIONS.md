@@ -3,6 +3,13 @@
 Product decisions that the code depends on. Newest first. Older entries came from the app's earlier
 life under another name; the full history is in git.
 
+## Sage & Clay theme (2026-10-30)
+
+The owner found the Orbit navy and brass theme too aggressive. The app now uses a light "Sage &
+Clay" theme (warm paper, jade actions, clay highlights) with distinctive controls: beam composer,
+tactile keys, spotlight cards, sliding pills and a marker highlight. Orbit's layouts stay. Details
+and sources (Radix Colors, Magic UI) in `docs/DESIGN.md`. Light only for now.
+
 ## Backend layout (2026-10-30)
 
 All Python is one uv project in `backend/` with one package, `app`, laid out by layer: `api/`

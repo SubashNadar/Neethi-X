@@ -86,7 +86,7 @@ export default function LoginPage() {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:44px_44px] [mask-image:radial-gradient(ellipse_at_top_left,black,transparent_75%)]"
         />
         <div aria-hidden className="pointer-events-none absolute -left-24 top-1/3 h-80 w-80 rounded-full bg-navy-600/50 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-brass/25 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-brass/30 blur-3xl" />
         <div className="relative">
           <BrandLockup inverted />
         </div>
@@ -96,12 +96,12 @@ export default function LoginPage() {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="relative max-w-[460px]"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-brass/40 bg-brass/10 px-3 py-1 text-xs font-semibold text-brass-light">
+          <div className="inline-flex items-center gap-2 rounded-full border border-brass-glow/40 bg-brass-glow/10 px-3 py-1 text-xs font-semibold text-brass-glow">
             <Scale className="size-3.5" />
             AI legal assistant for India
           </div>
           <h1 className="mt-5 font-display text-[44px] font-semibold leading-[1.05] tracking-[-0.02em] xl:text-[52px]">
-            Legal help, finally <span className="italic text-brass-light">within reach.</span>
+            Legal help, finally <span className="italic text-brass-glow underline decoration-brass/60 decoration-wavy underline-offset-[10px]">within reach.</span>
           </h1>
           <p className="mt-5 text-[16px] leading-[1.7] text-white/70">
             90% of Indians can't afford a lawyer. Ask Nya-AI anything about your rights — free, instant,
@@ -110,7 +110,7 @@ export default function LoginPage() {
           <div className="mt-8 grid grid-cols-3 gap-3">
             {BADGES.map((b) => (
               <div key={b.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                <b.icon className="size-5 text-brass-light" />
+                <b.icon className="size-5 text-brass-glow" />
                 <div className="mt-3 text-[13px] font-semibold leading-snug text-white/90">{b.label}</div>
               </div>
             ))}
@@ -118,7 +118,7 @@ export default function LoginPage() {
         </motion.div>
         <div className="relative rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
           <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
-            <Sparkles className="size-3.5 text-brass-light" />
+            <Sparkles className="size-3.5 text-brass-glow" />
             Ask Nya-AI
           </div>
           <div className="mt-3 ml-auto w-fit rounded-2xl rounded-tr-md bg-white/10 px-3.5 py-2 text-[13px]">
@@ -132,7 +132,7 @@ export default function LoginPage() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-16 flex-none items-center px-6 lg:hidden">
-          <BrandLockup inverted />
+          <BrandLockup />
         </header>
         <div className="flex flex-1 items-center justify-center p-6">
           <motion.div
@@ -143,26 +143,40 @@ export default function LoginPage() {
           >
             <div className="mb-8 lg:hidden">
               <h1 className="font-display text-[34px] font-semibold leading-[1.08]">
-                Legal help, finally <span className="italic text-primary">within reach.</span>
+                Legal help, finally <span className="marker italic text-primary">within reach.</span>
               </h1>
             </div>
               <div className="font-display text-[30px] font-semibold tracking-[-0.01em]">Get started</div>
               <div className="mt-5 flex gap-1 rounded-full border border-line bg-bg p-1">
                 <button
                   onClick={() => setRole('user')}
-                  className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'user' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
+                  className={`relative flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
+                    role === 'user' ? 'text-primary-foreground' : 'text-body2 hover:text-ink'
                   }`}
                 >
-                  I need legal help
+                  {role === 'user' && (
+                    <motion.span
+                      layoutId="login-role"
+                      className="absolute inset-0 rounded-full bg-primary shadow-[0_2px_0_0_#0F4237]"
+                      transition={{ type: 'spring', stiffness: 500, damping: 38 }}
+                    />
+                  )}
+                  <span className="relative">I need legal help</span>
                 </button>
                 <button
                   onClick={() => setRole('lawyer')}
-                  className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'lawyer' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
+                  className={`relative flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
+                    role === 'lawyer' ? 'text-primary-foreground' : 'text-body2 hover:text-ink'
                   }`}
                 >
-                  I'm a lawyer
+                  {role === 'lawyer' && (
+                    <motion.span
+                      layoutId="login-role"
+                      className="absolute inset-0 rounded-full bg-primary shadow-[0_2px_0_0_#0F4237]"
+                      transition={{ type: 'spring', stiffness: 500, damping: 38 }}
+                    />
+                  )}
+                  <span className="relative">I'm a lawyer</span>
                 </button>
               </div>
               <div className="mt-3 text-[13px] text-muted">{loginSub}</div>
@@ -196,7 +210,7 @@ export default function LoginPage() {
                   <button
                     onClick={handleVerifyOtp}
                     disabled={loading}
-                    className="mt-3.5 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                    className="key mt-3.5 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                   >
                     {loading ? 'Verifying…' : 'Continue'}
                   </button>
@@ -205,7 +219,7 @@ export default function LoginPage() {
                 <button
                   onClick={handleSendOtp}
                   disabled={loading}
-                  className="mt-4 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                  className="key mt-4 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                 >
                   {loading ? 'Sending…' : 'Get OTP'}
                 </button>
