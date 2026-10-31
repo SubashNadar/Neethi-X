@@ -101,7 +101,7 @@ export default function LoginPage() {
             AI legal assistant for India
           </div>
           <h1 className="mt-5 font-display text-[44px] font-semibold leading-[1.05] tracking-[-0.02em] xl:text-[52px]">
-            Legal help, finally <span className="italic text-brass-glow underline decoration-brass/60 decoration-wavy underline-offset-[10px]">within reach.</span>
+            Legal help, finally <span className="italic text-brass-glow">within reach.</span>
           </h1>
           <p className="mt-5 text-[16px] leading-[1.7] text-white/70">
             90% of Indians can't afford a lawyer. Ask Nya-AI anything about your rights — free, instant,
@@ -143,40 +143,26 @@ export default function LoginPage() {
           >
             <div className="mb-8 lg:hidden">
               <h1 className="font-display text-[34px] font-semibold leading-[1.08]">
-                Legal help, finally <span className="marker italic text-primary">within reach.</span>
+                Legal help, finally <span className="italic text-primary">within reach.</span>
               </h1>
             </div>
               <div className="font-display text-[30px] font-semibold tracking-[-0.01em]">Get started</div>
               <div className="mt-5 flex gap-1 rounded-full border border-line bg-bg p-1">
                 <button
                   onClick={() => setRole('user')}
-                  className={`relative flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'user' ? 'text-primary-foreground' : 'text-body2 hover:text-ink'
+                  className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
+                    role === 'user' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
                   }`}
                 >
-                  {role === 'user' && (
-                    <motion.span
-                      layoutId="login-role"
-                      className="absolute inset-0 rounded-full bg-primary shadow-[0_2px_0_0_#0F4237]"
-                      transition={{ type: 'spring', stiffness: 500, damping: 38 }}
-                    />
-                  )}
-                  <span className="relative">I need legal help</span>
+                  I need legal help
                 </button>
                 <button
                   onClick={() => setRole('lawyer')}
-                  className={`relative flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
-                    role === 'lawyer' ? 'text-primary-foreground' : 'text-body2 hover:text-ink'
+                  className={`flex-1 rounded-full px-2.5 py-2 text-[13px] font-semibold transition-colors ${
+                    role === 'lawyer' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-transparent text-body2 hover:text-ink'
                   }`}
                 >
-                  {role === 'lawyer' && (
-                    <motion.span
-                      layoutId="login-role"
-                      className="absolute inset-0 rounded-full bg-primary shadow-[0_2px_0_0_#0F4237]"
-                      transition={{ type: 'spring', stiffness: 500, damping: 38 }}
-                    />
-                  )}
-                  <span className="relative">I'm a lawyer</span>
+                  I'm a lawyer
                 </button>
               </div>
               <div className="mt-3 text-[13px] text-muted">{loginSub}</div>
@@ -210,7 +196,7 @@ export default function LoginPage() {
                   <button
                     onClick={handleVerifyOtp}
                     disabled={loading}
-                    className="key mt-3.5 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                    className="mt-3.5 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                   >
                     {loading ? 'Verifying…' : 'Continue'}
                   </button>
@@ -219,7 +205,7 @@ export default function LoginPage() {
                 <button
                   onClick={handleSendOtp}
                   disabled={loading}
-                  className="key mt-4 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
+                  className="mt-4 w-full rounded-full bg-primary hover:bg-primary-hover py-3.5 text-[15px] font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift disabled:opacity-60"
                 >
                   {loading ? 'Sending…' : 'Get OTP'}
                 </button>

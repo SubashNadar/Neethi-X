@@ -51,7 +51,7 @@ function ConsultationCard({ booking }: { booking: Booking }) {
       {open && (
         <button
           onClick={() => navigate(`/call/${booking.id}`)}
-          className="key w-full rounded-full bg-primary px-4 py-2 text-[13px] font-bold sm:w-auto sm:flex-none text-primary-foreground hover:bg-primary-hover"
+          className="w-full rounded-full bg-primary px-4 py-2 text-[13px] font-bold sm:w-auto sm:flex-none text-primary-foreground hover:bg-primary-hover"
         >
           Call room
         </button>

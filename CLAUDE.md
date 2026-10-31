@@ -12,10 +12,12 @@ Nya-AI is the only product.
 ## Sources of truth
 
 1. **UI:** layouts from the Orbit design canvas, https://claude.ai/artifact/QYs5pGyrFcvACgYUWrUp1g
-   (every screen has a desktop and a phone board, wired for Play mode). Colours and controls are
-   **Sage & Clay** since 2026-10-30, documented in `docs/DESIGN.md`: warm paper `#F6F4EE`
+   (every screen has a desktop and a phone board, wired for Play mode). Keep Orbit's menu, layout
+   and alignment exactly. Colours are **Sage & Clay** since 2026-10-30, documented in `docs/DESIGN.md`: warm paper `#F6F4EE`
    background, jade `#1E6B5C` actions, clay `#E0894A` highlights, Fraunces headings, Figtree body,
-   JetBrains Mono for metadata and citations. The canvas still shows the old navy theme; the app wins.
+   JetBrains Mono for metadata and citations. The canvas still shows the old navy theme; the app wins
+   on colour. New control styling or behaviour needs the owner's approval first (proposals in
+   `docs/DESIGN.md`).
 2. **Agent plan:** https://claude.ai/artifact/KtuTmzcwCe2aMQqWRtVN29 (LangGraph graph, LlamaIndex
    library, Langfuse observability, per-agent SLOs).
 3. **Capstone design:** SubashNadar/legal-docs-platform `docs/NYA-AI.md` and
@@ -54,9 +56,9 @@ Nya-AI is the only product.
 ## Log (newest first)
 
 - **2026-10-30** — Theme changed from Orbit navy/brass to Sage & Clay (light, calmer) after the owner
-  found Orbit too aggressive. Signature controls: beam composer, tactile `.key` buttons, spotlight
-  cards, sliding pills, marker highlight, floating phone tab dock. Plan and sources in
-  `docs/DESIGN.md`. No dark mode yet.
+  found Orbit too aggressive. Only colours changed; Orbit menu and layout untouched. The first push
+  (d12d908) also restyled controls; the owner asked to keep layout and approve controls first, so
+  those were removed and listed as proposals in `docs/DESIGN.md`. No dark mode yet.
 
 - **2026-10-30** — Backend restructured into one package `app` by layer (api, core, db, services,
   agents, rag, evals), tests in `backend/tests/{api,rag}`, one `.env` (agent Postgres URL renamed

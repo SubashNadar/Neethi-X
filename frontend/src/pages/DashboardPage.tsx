@@ -34,7 +34,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex-1 overflow-y-auto px-5 py-7 md:px-8">
-      <div className="relative max-w-[1000px] overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-primary-tint via-surface to-brass-soft p-7 text-ink shadow-card md:p-9">
+      <div className="relative max-w-[1000px] overflow-hidden rounded-3xl bg-gradient-to-br from-primary-tint via-surface to-brass-soft p-7 text-ink shadow-card md:p-9">
         <div aria-hidden className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-brass-glow/40 blur-3xl" />
         <div
           aria-hidden
@@ -43,13 +43,13 @@ export default function DashboardPage() {
         <div className="relative flex flex-col gap-5 md:flex-row md:items-end">
           <div className="flex-1">
             <h1 className="font-display text-[32px] font-semibold leading-tight tracking-[-0.01em] md:text-[40px]">
-              Namaste, <span className="marker italic text-brass-dark">{firstName}</span>
+              Namaste, <span className="italic text-brass-dark">{firstName}</span>
             </h1>
             <div className="mt-2 text-sm text-muted">Your legal matters, all in one place</div>
           </div>
           <button
             onClick={() => navigate('/chat')}
-            className="key inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground hover:bg-primary-hover"
+            className="inline-flex w-fit items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground shadow-card transition-transform hover:-translate-y-0.5"
           >
             <MessageSquareText className="size-4" />
             Ask Nya-AI
@@ -112,7 +112,7 @@ export default function DashboardPage() {
           </div>
           <button
             onClick={() => navigate('/chat')}
-            className="key whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+            className="whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
             Ask Nya-AI
           </button>

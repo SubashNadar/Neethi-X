@@ -202,7 +202,7 @@ export default function ConsultPlanPage() {
           </section>
           <button
             type="submit"
-            className="key rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-hover"
+            className="rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-hover"
           >
             Choose an advocate and time
           </button>

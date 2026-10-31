@@ -24,7 +24,7 @@ export function ErrorState({
       {onRetry && (
         <button
           onClick={onRetry}
-          className="key rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+          className="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
         >
           Try again
         </button>
@@ -53,7 +53,7 @@ export function EmptyState({
       {actionLabel && onAction && (
         <button
           onClick={onAction}
-          className="key whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+          className="whitespace-nowrap rounded-full bg-primary px-5 py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
         >
           {actionLabel}
         </button>

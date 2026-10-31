@@ -114,7 +114,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={sending}
-              className="key self-start rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover disabled:opacity-60"
+              className="self-start rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover disabled:opacity-60"
             >
               {sending ? 'Sending…' : 'Send message'}
             </button>

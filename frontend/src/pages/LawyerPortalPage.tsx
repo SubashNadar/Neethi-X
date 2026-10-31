@@ -154,7 +154,7 @@ export default function LawyerPortalPage() {
                 {r.status === 'accepted' && (
                   <button
                     onClick={() => navigate('/messages')}
-                    className="key rounded-full bg-primary px-[18px] py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
+                    className="rounded-full bg-primary px-[18px] py-2.5 text-[13px] font-bold text-primary-foreground transition-colors hover:bg-primary-hover"
                   >
                     Respond
                   </button>

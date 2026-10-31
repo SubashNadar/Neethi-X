@@ -89,16 +89,11 @@ export default {
           from: { backgroundPosition: '200% 0' },
           to: { backgroundPosition: '-200% 0' },
         },
-        ping2: {
-          '0%': { transform: 'scale(1)', opacity: '0.55' },
-          '100%': { transform: 'scale(1.9)', opacity: '0' },
-        },
       },
       animation: {
         dotpulse: 'dotpulse 1s infinite',
         shimmer: 'shimmer 2.4s linear infinite',
         spin: 'spin 0.8s linear infinite',
-        ping2: 'ping2 1.8s cubic-bezier(0,0,.2,1) infinite',
       },
     },
   },

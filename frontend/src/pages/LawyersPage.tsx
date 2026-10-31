@@ -4,7 +4,6 @@ import { motion } from 'motion/react'
 import { useNavigate } from 'react-router-dom'
 import { getApiErrorMessage, getLawyers } from '../lib/api'
 import { ErrorState, LoadingState } from '../components/states'
-import { trackSpotlight } from '../lib/spotlight'
 import type { LawyerCard } from '../types'
 
 const FILTERS = ['All', 'Criminal', 'Property', 'Family', 'Employment']
@@ -37,23 +36,16 @@ export default function LawyersPage() {
         First consultation ₹500 · Your lawyer keeps 70% · Bar Council verified
       </div>
 
-      <div className="mt-6 inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-line bg-surface p-1 shadow-card [scrollbar-width:none]">
+      <div className="mt-6 inline-flex flex-wrap gap-1 rounded-full border border-line bg-surface p-1 shadow-card">
         {FILTERS.map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`relative flex-none rounded-full px-4 py-2 text-[13px] font-semibold transition-colors ${
-              filter === f ? 'text-primary-foreground' : 'text-body2 hover:bg-bg hover:text-ink'
+            className={`rounded-full px-4 py-2 text-[13px] font-semibold transition-colors ${
+              filter === f ? 'bg-primary text-primary-foreground shadow-sm' : 'text-body2 hover:bg-bg hover:text-ink'
             }`}
           >
-            {filter === f && (
-              <motion.span
-                layoutId="lawyer-filter"
-                className="absolute inset-0 rounded-full bg-primary shadow-[0_2px_0_0_#0F4237]"
-                transition={{ type: 'spring', stiffness: 500, damping: 38 }}
-              />
-            )}
-            <span className="relative">{f}</span>
+            {f}
           </button>
         ))}
       </div>
@@ -74,8 +66,7 @@ export default function LawyersPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * i, duration: 0.25, ease: 'easeOut' }}
               whileHover={{ y: -3 }}
-              onPointerMove={trackSpotlight}
-              className="spotlight group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-shadow hover:shadow-lift"
+              className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-shadow hover:shadow-lift"
             >
               <div
                 className="relative h-20"
@@ -85,7 +76,7 @@ export default function LawyersPage() {
               >
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.22)_1px,transparent_0)] [background-size:16px_16px]"
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.18)_1px,transparent_0)] [background-size:16px_16px]"
                 />
                 <div className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur">
                   <Star className="size-3.5 fill-brass-light text-brass-light" />
@@ -136,7 +127,7 @@ export default function LawyersPage() {
                 </div>
                 <button
                   onClick={() => navigate(`/booking/${lw.id}`)}
-                  className="key rounded-full bg-primary hover:bg-primary-hover px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift"
+                  className="rounded-full bg-primary hover:bg-primary-hover px-6 py-2.5 text-sm font-bold text-primary-foreground shadow-card transition-all hover:shadow-lift"
                 >
                   Book
                 </button>

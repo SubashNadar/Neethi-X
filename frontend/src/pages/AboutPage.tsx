@@ -39,7 +39,7 @@ export default function AboutPage() {
           when you need advice on your own case.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/login" className="key rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover">
+          <Link to="/login" className="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary-hover">
             Ask a question
           </Link>
           <Link to="/contact" className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-ink hover:bg-soft">

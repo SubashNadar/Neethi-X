@@ -1,9 +1,9 @@
 # Nya-AI design: Sage & Clay
 
 Replaced the Orbit navy and brass theme on 2026-10-30. The owner found Orbit too aggressive and asked
-for a pleasant palette with controls that still catch the eye on first view. Orbit's layout stays
-(trace panel, cited ¶ answer, temporal panel, consult plan, call room); only the theme and the
-controls changed.
+for a pleasant palette. Orbit's menu, layout and alignment stay exactly as they were (trace panel,
+cited ¶ answer, temporal panel, consult plan, call room, 40px grid); **only colours changed**. New
+control styling or behaviour is proposed below and applied only after the owner approves it.
 
 ## Sources studied
 
@@ -11,8 +11,8 @@ controls changed.
   set the neutrals, the action colour and the warning tones, and their step 11/12 rule for text
   contrast.
 - **Magic UI** (MIT, https://github.com/magicuidesign/magicui): border beam, shimmer button, magic
-  card and highlighter. Rewritten as plain CSS in `frontend/src/index.css` because Magic UI targets
-  Tailwind 4 and `next-themes`, and this app is Tailwind 3.
+  card and highlighter, the basis of the proposed controls. They would be rewritten as plain CSS
+  because Magic UI targets Tailwind 4 and `next-themes`, and this app is Tailwind 3.
 - **shadcn/ui** (MIT): token names and the button and badge components were already in place.
 
 ## Palette
@@ -33,22 +33,21 @@ controls changed.
 The old token names (`navy`, `brass`) are kept so no page had to be rewritten; the comments in
 `tailwind.config.js` say what each now holds.
 
-## Signature controls
+## Proposed controls (awaiting the owner's approval)
 
-1. **Beam composer** (`.beam`): a slow jade-to-clay light travels round the chat box; it speeds up
-   and fills in when the box has focus.
-2. **Tactile keys** (`.key`, the default `Button` variant and every primary CTA): a raised jade
-   button that sinks 2px on press, with a light sweep on hover.
-3. **Spotlight cards** (`.spotlight` + `trackSpotlight`): a soft clay glow follows the pointer on
-   the chat starter cards and the lawyer cards.
-4. **Sliding pills**: active nav, the phone tab dock, the login role switch and the lawyer filters
-   slide between options with a spring (`motion` `layoutId`).
-5. **Marker highlight** (`.marker`): a clay highlighter stroke draws under the key word of a
-   headline ("Nya-AI.", "within reach.", the dashboard name).
-6. **Floating tab dock** on phones, with a clay dot on the active tab, and a pulsing halo round the
-   logo on the empty chat.
+Built once in d12d908, then taken out in the next commit because the owner wants layout and
+behaviour unchanged until each one is approved. The code is in d12d908 if one is approved.
 
-All motion stops under `prefers-reduced-motion`.
+1. **Beam composer**: a slow jade-to-clay light travels round the chat box; faster on focus.
+2. **Tactile keys**: primary buttons look raised and sink 2px on press, with a light sweep on hover.
+3. **Spotlight cards**: a soft clay glow follows the pointer on chat starter and lawyer cards.
+4. **Sliding pills**: the login role switch and lawyer filters slide between options (the sidebar
+   already does this).
+5. **Marker highlight**: a clay highlighter stroke draws under a headline's key word.
+6. **Floating phone tab dock** with a clay dot on the active tab (changes the phone layout).
+7. **Logo halo**: a pulsing ring round the logo on the empty chat.
+
+All would stop under `prefers-reduced-motion`.
 
 ## Not done yet
 

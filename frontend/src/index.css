@@ -18,12 +18,13 @@ body,
 
 body {
   margin: 0;
-  /* Sage & Clay: warm paper with a soft jade and clay wash and a faint dot grid. */
+  /* Sage & Clay: warm paper with Orbit's faint grid, plus a soft jade and clay wash. */
   background-color: #f6f4ee;
   background-image: radial-gradient(60rem 40rem at 100% -10%, rgba(242, 177, 132, 0.18), transparent 60%),
     radial-gradient(50rem 36rem at -10% 110%, rgba(30, 107, 92, 0.1), transparent 60%),
-    radial-gradient(circle at 1px 1px, rgba(28, 35, 33, 0.07) 1px, transparent 0);
-  background-size: auto, auto, 22px 22px;
+    linear-gradient(rgba(30, 107, 92, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 107, 92, 0.05) 1px, transparent 1px);
+  background-size: auto, auto, 40px 40px, 40px 40px;
   background-attachment: fixed;
   color: #1c2321;
   font-family: 'Figtree', sans-serif;
@@ -65,120 +66,3 @@ button {
   font-family: inherit;
 }
 
-/* Signature controls. Ideas adapted from Magic UI (MIT, https://github.com/magicuidesign/magicui):
-   border beam, shimmer button, magic card and highlighter, rewritten as plain CSS for Tailwind 3. */
-
-@property --beam-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-
-/* A slow jade-to-clay light that travels round the border. Wrap the element; padding is the border width. */
-.beam {
-  position: relative;
-  border-radius: 1.1rem;
-  padding: 1.5px;
-  background: conic-gradient(
-    from var(--beam-angle),
-    #d5d0c4 0deg,
-    #d5d0c4 200deg,
-    #1e6b5c 270deg,
-    #e0894a 320deg,
-    #d5d0c4 360deg
-  );
-  animation: beam 6s linear infinite;
-}
-.beam:focus-within {
-  background: conic-gradient(from var(--beam-angle), #1e6b5c, #e0894a, #2e9a6c, #1e6b5c);
-  animation-duration: 3s;
-}
-.beam > * {
-  border-radius: calc(1.1rem - 1.5px);
-}
-
-/* Tactile key: a raised button that sinks when pressed, with a light sweep across it. */
-.key {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  box-shadow: 0 3px 0 0 #0f4237, 0 8px 18px rgba(30, 107, 92, 0.25);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
-}
-.key::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 40%;
-  z-index: -1;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
-  transform: translateX(-120%) skewX(-20deg);
-}
-.key:hover::after {
-  animation: sweep 1.4s ease-in-out;
-}
-.key:active:not(:disabled) {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 0 #0f4237, 0 3px 8px rgba(30, 107, 92, 0.2);
-}
-.key:disabled {
-  box-shadow: none;
-}
-
-/* Spotlight card: a soft glow follows the pointer (see SpotlightCard.tsx). */
-.spotlight {
-  position: relative;
-  isolation: isolate;
-}
-.spotlight::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  background: radial-gradient(
-    260px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(224, 137, 74, 0.16),
-    rgba(30, 107, 92, 0.08) 45%,
-    transparent 70%
-  );
-}
-.spotlight:hover::before {
-  opacity: 1;
-}
-
-/* Highlighter: a clay marker stroke drawn behind a word. */
-.marker {
-  background-image: linear-gradient(transparent 58%, rgba(242, 177, 132, 0.55) 58%, rgba(242, 177, 132, 0.55) 92%, transparent 92%);
-  background-repeat: no-repeat;
-  animation: marker 0.9s 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-@keyframes beam {
-  to {
-    --beam-angle: 360deg;
-  }
-}
-@keyframes sweep {
-  to {
-    transform: translateX(320%) skewX(-20deg);
-  }
-}
-@keyframes marker {
-  from {
-    background-size: 0% 100%;
-  }
-  to {
-    background-size: 100% 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .beam,
-  .marker,
-  .key:hover::after {
-    animation: none;
-  }
-}

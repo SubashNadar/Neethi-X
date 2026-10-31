@@ -6,9 +6,10 @@ life under another name; the full history is in git.
 ## Sage & Clay theme (2026-10-30)
 
 The owner found the Orbit navy and brass theme too aggressive. The app now uses a light "Sage &
-Clay" theme (warm paper, jade actions, clay highlights) with distinctive controls: beam composer,
-tactile keys, spotlight cards, sliding pills and a marker highlight. Orbit's layouts stay. Details
-and sources (Radix Colors, Magic UI) in `docs/DESIGN.md`. Light only for now.
+Clay" palette (warm paper, jade actions, clay highlights). Orbit's menu, layout and alignment are
+unchanged: only colours changed. New control styling (beam composer, tactile keys, spotlight cards,
+sliding pills, marker, floating dock) is a proposal list in `docs/DESIGN.md`, applied one by one
+only after the owner approves it. Light only for now.
 
 ## Backend layout (2026-10-30)
 

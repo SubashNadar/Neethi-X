@@ -207,7 +207,7 @@ export default function BookingPage() {
             onClick={proceedToPay}
             disabled={!canPay || booking}
             className={`mt-[18px] w-full rounded-full py-3.5 text-[15px] font-bold text-primary-foreground transition-colors ${
-              canPay ? 'key cursor-pointer bg-primary hover:bg-primary-hover' : 'cursor-not-allowed bg-faint'
+              canPay ? 'cursor-pointer bg-primary hover:bg-primary-hover' : 'cursor-not-allowed bg-faint'
             }`}
           >
             {booking ? 'Booking…' : canPay ? 'Proceed to pay ₹500' : 'Pick a time slot first'}
