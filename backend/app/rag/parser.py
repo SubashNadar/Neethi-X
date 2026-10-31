@@ -8,6 +8,7 @@ section. Sections longer than about `max_tokens` are split at sub-section marker
 
 import re
 from collections.abc import Sequence
+from dataclasses import dataclass
 from typing import Any
 
 from llama_index.core.node_parser import NodeParser
@@ -28,15 +29,34 @@ _WRAP = (
 SECTION_START = re.compile(
     _PREFIX + r"(?:\s*+[—–]\s*+|\s++)"
     + _NOT_SECTION + r"(?P<heading>[^\s—–][^\n—–]{1,219}?(?:" + _WRAP + r"){0,2})"
-    r"\.?\s*(?:—|–|-{2}|\.-)\s*",
+    r"\.?\s*(?:—|–|-{2}|-[ \t]+-|\.-)\s*",
     re.MULTILINE,
 )
 # A repealed section keeps its number and bracketed heading: "13.\n[Definition of "Queen".] Rep. by ...".
 REPEALED = re.compile(_PREFIX + r"\s*\[(?P<heading>[^\]]{2,300}?)\.?\]\s*Rep\.", re.MULTILINE)
+# Some PDFs drop the opening bracket: "16.\nDefinition of "Government of India".] Rep., ibid."
+REPEALED_OPEN = re.compile(_PREFIX + r"[ \t]*\n?[ \t]*(?P<heading>[^\[\]\n]{2,200}?)\.?\]\s*Rep\.", re.MULTILINE)
+# A run of sections repealed together: "161 to 165A.Rep. by the Prevention of Corruption Act, 1988".
+REPEALED_RANGE = re.compile(
+    r"^[ \t]*(?P<a>\d{1,3})[A-Z]{0,2}[ \t]+to[ \t]+(?P<b>\d{1,3})(?P<bl>[A-Z]{0,2})\.\s*\[?[^\n]{0,120}?Rep\.",
+    re.MULTILINE,
+)
+# Misprints in the official PDFs, fixed before parsing. Each is the exact printed text and its fix.
+ERRATA: dict[str, list[tuple[str, str]]] = {
+    # The body of IPC 330 is printed as "320." (its margin note says 330).
+    "IPC": [("320. Voluntarily causing hurt to extort confession", "330. Voluntarily causing hurt to extort confession")],
+}
 CHAPTER = re.compile(r"^\s*CHAPTER\s+(?P<num>[IVXLC]+[A-Z]?)\s*\n\s*(?P<title>[^\n]{3,200})", re.MULTILINE)
 # Amendment footnotes India Code prints at the foot of a page, e.g. "1. Subs. by Act 5 of 2009".
 FOOTNOTE = re.compile(r"^\s*\d{1,2}\.\s+(?:Subs|Ins|Omitted|Rep|Added|The words|Cl|Sub-section)\b.*$", re.MULTILINE)
 SUBSECTION = re.compile(r"(?=\(\d{1,2}\)\s)")
+
+
+@dataclass
+class SectionStart:
+    pos: int
+    num: str
+    heading: str
 
 
 def section_key(num: str) -> tuple[int, str]:
@@ -70,25 +90,28 @@ class SectionNodeParser(NodeParser):
         page_starts: list[list[Any]] = meta.pop("page_starts", None) or []
         act = meta["act"]
         text = FOOTNOTE.sub("", doc.get_content())
+        for printed, fixed in ERRATA.get(act, []):
+            text = text.replace(printed, fixed)
 
         chapters = [(m.start(), m.group("num"), m.group("title").strip()) for m in CHAPTER.finditer(text)]
         starts = self._section_starts(text)
 
         nodes: list[TextNode] = []
         for i, m in enumerate(starts):
-            end = starts[i + 1].start() if i + 1 < len(starts) else len(text)
+            # Sections repealed as a range share one start; each gets the range's text.
+            end = next((s.pos for s in starts[i + 1 :] if s.pos > m.pos), len(text))
             # A chapter heading printed between two sections belongs to the next one.
-            end = min([end] + [pos for pos, _, _ in chapters if m.start() < pos < end])
-            body = re.sub(r"[ \t]+", " ", text[m.start() : end]).strip()
-            num, heading = m.group("num"), " ".join(m.group("heading").split())
-            chapter = next(((c, t) for pos, c, t in reversed(chapters) if pos < m.start()), (None, None))
+            end = min([end] + [pos for pos, _, _ in chapters if m.pos < pos < end])
+            body = re.sub(r"[ \t]+", " ", text[m.pos : end]).strip()
+            num, heading = m.num, m.heading
+            chapter = next(((c, t) for pos, c, t in reversed(chapters) if pos < m.pos), (None, None))
             base = {
                 **meta,
                 "section": num,
                 "heading": heading,
                 "chapter": chapter[0],
                 "chapter_title": chapter[1],
-                "page": self._page_at(page_starts, m.start()),
+                "page": self._page_at(page_starts, m.pos),
             }
             parts = self._split_long(body)
             for p, part in enumerate(parts):
@@ -104,7 +127,7 @@ class SectionNodeParser(NodeParser):
                 nodes.append(node)
         return nodes
 
-    def _section_starts(self, text: str) -> list[re.Match[str]]:
+    def _section_starts(self, text: str) -> list[SectionStart]:
         """Section heading matches in order, dropping false hits.
 
         Real section numbers rise through the act, so the longest run of matches whose numbers
@@ -112,10 +135,18 @@ class SectionNodeParser(NodeParser):
         cross-reference at a line start, falls outside that run and is dropped without taking the
         sections after it down too.
         """
-        found = sorted(
-            [*SECTION_START.finditer(text), *REPEALED.finditer(text)], key=lambda m: m.start()
-        )
-        keys = [section_key(m.group("num")) for m in found]
+        found = [
+            SectionStart(m.start(), m.group("num"), " ".join(m.group("heading").split()))
+            for rx in (SECTION_START, REPEALED, REPEALED_OPEN)
+            for m in rx.finditer(text)
+        ]
+        for m in REPEALED_RANGE.finditer(text):
+            a, b, letters = int(m.group("a")), int(m.group("b")), m.group("bl")
+            if a < b <= a + 50:
+                nums = [str(n) for n in range(a, b + 1)] + ([f"{b}{letters}"] if letters else [])
+                found += [SectionStart(m.start(), n, "Repealed") for n in nums]
+        found.sort(key=lambda s: (s.pos, section_key(s.num)))
+        keys = [section_key(s.num) for s in found]
         # Longest strictly increasing subsequence, O(n log n).
         tails: list[int] = []
         prev = [-1] * len(found)
@@ -132,7 +163,7 @@ class SectionNodeParser(NodeParser):
                 tails.append(i)
             else:
                 tails[lo] = i
-        kept: list[re.Match[str]] = []
+        kept: list[SectionStart] = []
         i = tails[-1] if tails else -1
         while i != -1:
             kept.append(found[i])

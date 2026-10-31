@@ -72,6 +72,38 @@ def test_layouts_seen_in_the_real_ipc_and_bns():
     }
 
 
+def test_ipc_gaps_found_on_the_real_pdf():
+    # Layouts from the India Code IPC that the parser missed: a repealed heading without its
+    # opening bracket (16), a dash printed "- -" (158), a range repealed on one line (161 to 165A)
+    # and section 330 misprinted as "320." in the body.
+    text = (
+        "15.\n[Definition of \"British India\".] Rep. by the A. O. 1937.\n"
+        "16. \nDefinition of \"Government of India\".] Rep., ibid. \n"
+        "17. \"Government\".—The word \"Government\" denotes.\n"
+        "157. Harbouring persons hired for an unlawful assembly.—Whoever harbours.\n"
+        "158. Being hired to take part in an unlawful assembly or riot;- -\nWhoever is engaged, or hired.\n\n"
+        "159. Affray.—When two or more persons.\n"
+        "161 to 165A. \n161 to 165A.Rep. by the Prevention of Corruption Act, 1988 (49 of \n1988), s. 31. \n"
+        "166. Public servant disobeying law, with intent to cause injury to any person.—Whoever.\n"
+        "320. Grievous hurt.—The following kinds of hurt.\n"
+        "329. Voluntarily causing grievous hurt to extort property.—Whoever.\n"
+        "330. \nVoluntarily causing hurt to extort confession or to compel \nrestoration of property. \n"
+        "320. Voluntarily causing hurt to extort confession or to compel \nrestoration of property.--Whoever voluntarily.\n"
+        "331. Voluntarily causing grievous hurt to extort confession.—Whoever.\n"
+    )
+    nodes = SectionNodeParser().split_act(Document(text=text, metadata={**META, "act": "IPC"}))
+    got = {n.metadata["section"]: n.metadata["heading"] for n in nodes}
+    assert list(got) == ["15", "16", "17", "157", "158", "159", "161", "162", "163", "164", "165", "165A",
+                         "166", "320", "329", "330", "331"]
+    assert got["16"] == 'Definition of "Government of India"'
+    assert got["158"] == "Being hired to take part in an unlawful assembly or riot;"
+    assert got["163"] == "Repealed"
+    assert got["330"].startswith("Voluntarily causing hurt to extort confession")
+    assert got["320"] == "Grievous hurt"
+    by = {n.metadata["section"]: n.text for n in nodes}
+    assert "Prevention of Corruption Act" in by["161"] and "Prevention of Corruption Act" in by["165A"]
+
+
 def test_a_stray_high_number_does_not_hide_the_sections_after_it():
     # The BNSS list of sections has entries followed by a sub-heading line such as "B.—Imprisonment".
     text = (
