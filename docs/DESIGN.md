@@ -33,7 +33,10 @@ control styling or behaviour is proposed below and applied only after the owner 
 The old token names (`navy`, `brass`) are kept so no page had to be rewritten; the comments in
 `tailwind.config.js` say what each now holds.
 
-## Proposed controls (awaiting the owner's approval)
+## Proposed controls (declined 2026-10-31)
+
+The owner chose Orbit's layout with Sage & Clay colours and none of these controls. Kept here for
+reference only.
 
 Built once in d12d908, then taken out in the next commit because the owner wants layout and
 behaviour unchanged until each one is approved. The code is in d12d908 if one is approved.
